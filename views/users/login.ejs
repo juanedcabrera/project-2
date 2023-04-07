@@ -1,15 +1,19 @@
 <%- include("../partials/header.ejs") %>
 
-<h2>Sign up for an account!</h2>
+<h2>Sign in to your account: </h2>
 
-<form method="POST" action="/users">
+<% if (message) { %>
+    <p><%= message %></p>
+<% } %>
+
+<form method="POST" action="/users/login">
     <label for="email">email:</label>
     <input type="email" name="email" id="email" required/>
 
     <label for="password">password:</label>
     <input type="password" name="password" id="password" required />
 
-    <button type="submit">Sign Up!</button>
+    <button type="submit">Log in!</button>
 </form>
 
 <%- include('../partials/footer.ejs') %>

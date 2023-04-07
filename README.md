@@ -1,33 +1,33 @@
 # Thoughtful.day
 
-## ➡️ TL;DR:
+## TL;DR:
 Thoughtful.day will be a journaling platform where users will be able to use different types of journaling templates.
 
-## 📝 Full Description:
-Thoughtful.day will be a journaling platform that utilizes templates to help people document their daily experience and personal growth in a private, secure digital space. Users can create profiles, customize their settings, pick different templates, and begin to write their entries, which can be tagged, organized, and found using an easy-to-navigate user interface.
+## Full Description:
+Thoughtful.day will be a journaling platform that utilizes templates to help people document <br> their daily experience and personal growth in a private, secure digital space. Users can create <br> profiles, customize their settings, pick different templates, and begin to write their <br> entries, which can be tagged, organized, and found using an easy-to-navigate user <br>interface.
 
-## 🎯 Target Audience for a journaling platform: 
+## Target Audience for a Journaling Platform: 
 - People who like to journal
 - People interested in mental health
 - Students interested in keeping a research journal
 - Professionals who want to keep a work journal for self or manager assessments
 - Writers who want to setup prompts for themselves
 
-## 🗣️ User Stories:
-As a user, I want have guided prompts to help me journal.
-As a user, I want to be able to tag my entries.
-As a user, I want to have inspirational quotes to be put in the right mindset to journal.
-As a user, my entries should be dated for searching purposes
-As a user, my entries should be searchable for reminiscing purposes
+## User Stories:
+- As a user, I want to have guided prompts to help me journal
+- As a user, I want to be able to tag my entries
+- As a user, I want to have inspirational quotes to be put in the right mindset to journal
+- As a user, my entries should be dated for searching purposes
+- As a user, my entries should be searchable for reminiscing purposes
 
-## 🚀 MVP (Minimum Viable Product) Goals
+## MVP (Minimum Viable Product) Goals
 
-- Allow users to create an account, log in, and log out securely.
+- Allow users to create an account, log in, and log out securely
 - Provide users the ability to add a journal entry
-- Allows users to tag journal entries
-- To have an API linked up for inspirational quotes to be generated on top of an entry
+- Allow users to tag journal entries
+- Generate inspirational quotes on top of an entry provided by a third-party API
 
-## 🌕 MMP (Minimum Marketable Product) or Stretch Goals
+## MMP (Minimum Marketable Product) or Stretch Goals
 - Ability to delete journal entries
 - Ability to edit journal entries
 - Search functionality to go through entry
@@ -37,14 +37,14 @@ As a user, my entries should be searchable for reminiscing purposes
 - Share ability to be enacted based on journal type
 - Ability to create template from form 
 
-## 💻 Technologies Used
-Java Script
-HTML
-CSS
-Express
-Node (sequelize, ejs, crypto-js)
-Postgres
-Data API
+## Technologies
+- Java Script
+- HTML
+- CSS
+- Express
+- Node (sequelize, ejs, crypto-js)
+- Postgres
+- Data API
 
 ## 🔍 Wireframes
 ![Wireframes](Wireframes-Home.drawio.png)

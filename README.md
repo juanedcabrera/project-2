@@ -57,7 +57,7 @@ Thoughtful.day will be a journaling platform that utilizes templates to help peo
 I will be using https://api.themotivate365.com/stoic-quote to retrieve stoicism quotes. The API provides a simple quote and author database and can provide one every day.
 
 ## 🔗 ERD (Entity Relationship Diagram)
-![ERD](ERD.drawio.png)
+![ERD](ERD.png)
 
 ## 🛣️ RESTful Routing Chart
 ![Routes](ResfulRouting.drawio.png)#

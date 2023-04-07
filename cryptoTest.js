@@ -16,26 +16,26 @@ const cryptoJs = require ('crypto-js')
 // console.log('sha256', digest)
 // encryption
 
-// const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt')
 
-// const userPassword = 'hello123'
+const userPassword = 'hello123'
 
-// const hashedPassword = bcrypt.hashSync(userPassword, 12)
+const hashedPassword = bcrypt.hashSync(userPassword, 12)
 
-// console.log(bcrypt.compareSync('hello123', hashedPassword))
+console.log(bcrypt(hashedPassword))
 
 // hashing is one way process 
 // encryption is two way process where data is locked in encrypted string and using key could remove the data from the string
 
 
 
-const stringToEncrypt = 'hello i am a secret message'
+// const stringToEncrypt = 'hello i am a secret message'
 
-const encryptionKey = 'myKey'
+// const encryptionKey = 'myKey'
 
-// Advanced Encryption Standard
-const myEncryption = cryptoJs.AES.encrypt(stringToEncrypt, encryptionKey)
-console.log(myEncryption.toString())
+// // Advanced Encryption Standard
+// const myEncryption = cryptoJs.AES.encrypt(stringToEncrypt, encryptionKey)
+// console.log(myEncryption.toString())
 
-const decryptedMessage = cryptoJs.AES.decrypt(myEncryption.toString(), encryptionKey).toString(cryptoJs.enc.Utf8)
-console.log(decryptedMessage)
+// const decryptedMessage = cryptoJs.AES.decrypt(myEncryption.toString(), encryptionKey).toString(cryptoJs.enc.Utf8)
+// console.log(decryptedMessage)

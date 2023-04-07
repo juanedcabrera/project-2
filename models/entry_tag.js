@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.entry_tag.belongsTo(models.entry)
-      models.entry_tag.belongsTo(models.tag)
+      models.entry.belongsTo(models.entry)
+      models.tag.belongsTo(models.tag);
     }
   }
   entry_tag.init({

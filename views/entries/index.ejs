@@ -1,5 +1,11 @@
-<%- include("./partials/header.ejs")%>
+<%- include("../partials/header.ejs")%>
 
 <h2>Entries - index</h2>
 
-<%- include("partials/footer.ejs") %>
+<ul>
+    <% entries.forEach((entry) => { %>
+      <li><a href="/entries/<%= entry.id %>"><%= entry.title %></a></li>
+    <% }); %>
+</ul>
+
+<%- include("../partials/footer.ejs") %>

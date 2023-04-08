@@ -72,15 +72,15 @@ router.post("/", async (req, res) => {
 });
 
 // GET /entries -- INDEX route to show all the entries
-// router.get('/', async (req, res) => {
-//     try {
-//         const entries = await db.entry.findAll()
-//         res.render('entries/index.ejs', { entries})
-//     } catch (err) {
-//         console.log(err)
-//         res.redirect('/')
-//     }
-// })
+router.get('/', async (req, res) => {
+    try {
+        const entries = await db.entry.findAll()
+        res.render('entries/index.ejs', { entries})
+    } catch (err) {
+        console.log(err)
+        res.redirect('/')
+    }
+})
 
 // GET /entries/:id -- SHOW route to display a single entry
 

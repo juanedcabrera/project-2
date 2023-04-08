@@ -23,8 +23,16 @@ app.use((req, res, next) => {
     // res.locals.myData = 'hi 👋'
     next() // tells express that this middleware has finished
 })
-// custom auth middleware
-app.use(async (req, res, next) => {
+
+// routes and controllers
+app.get('/', (req, res) => {
+    const user = res.locals.user
+    console.log(res.locals)
+    res.render("index.ejs", { user })
+})
+
+// middleware for authenticated routes
+const requireAuth = async (req, res, next) => {
     try {
         // check if there is a cookie
         if (req.cookies.userId) {
@@ -35,31 +43,21 @@ app.use(async (req, res, next) => {
             // mount the found user on the res.locals
             // in all other routes you can assume that the res.locals.user is the currently logged in user
             res.locals.user = user
-            // res.locals.user.addPet({}) 
+            next() // go to the next thing no matter what
         } else {
-            // if there is no cookie, set res.locals.user to be null
-            res.locals.user = null
+            // if there is no cookie, set return an authorized error
+            return res.render('unauthorized.ejs')
         }
     } catch (error) {
         console.log(error)
-        // if sometging goes wrong
-        // set the user in the res.locals to be null
-        res.locals.user = null
-    } finally {
-        // runs regardless of whether there was an error or not
-        next() // go to the next thing no matter what
-    }
-})
-
-
-// routes and controllers
-app.get('/', (req, res) => {
-    console.log(res.locals)
-    res.render("index.ejs")
-})
+        // if something goes wrong
+        // give unauthorized error
+        return res.render('unauthorized.ejs')
+    } 
+};
 
 app.use('/users', require('./controllers/users.js'))
-app.use('/entries', require('./controllers/entry.js'))
+app.use('/entries', requireAuth, require('./controllers/entry.js'))
 
 // listen a port
 app.listen(PORT, () => {

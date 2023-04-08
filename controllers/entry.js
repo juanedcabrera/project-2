@@ -4,9 +4,16 @@ const db = require("../models");
 const cryptoJs = require('crypto-js')
 
 // GET /entries/new -- SHOW form to create a new entry
-router.get("/new", (req, res) => {
-  res.render("entries/new.ejs");
+router.get('/new', (req, res) => {
+  const user = res.locals.user
+  res.render('entries/new.ejs', { user })
+})
+
+// router.get('/unauthorized') method
+router.get('/unauthorized', function(req, res, next) {
+  res.render('unauthorized', { user: req.user, partials: { header: './partials/header' } });
 });
+
 
 // POST /entries -- CREATE route to add a new entry
 router.post("/", async (req, res) => {

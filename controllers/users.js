@@ -7,7 +7,8 @@ const cryptoJs = require('crypto-js')
 
 // GET /users/new -- show route for a form that creates a new user (sign up for the app)
 router.get('/new', (req, res) => {
-    res.render('users/new.ejs')
+    const user = res.locals.user
+    res.render('users/new.ejs', { user })
 })
 
 // POST /users -- CREATE a new user from the form @ GET /users/new
@@ -47,7 +48,9 @@ router.post('/', async (req, res) => {
 // GET /users/login -- show route for a form that lets a user login
 router.get('/login', (req, res) => {
     console.log(req.query)
+    const user = res.locals.user
     res.render('users/login.ejs', {
+        user,
         message: req.query.message ? req.query.message : null
     })
 })
@@ -94,15 +97,31 @@ router.get('/logout', (req, res) => {
 
 // GET /users/profile -- show authorized users their profile page
 router.get('/profile', (req, res) => {
-    // if the user comes and is not logged -- they lack authorization
-    if(!res.locals.user) {
-        // redirect them ot the login
-        res.redirect('/users/login?message=You are not authorized to view that page. Please authenticate to continue 😎')
+    // check for the userId cookie
+    const encryptedPk = req.cookies.userId;
+    if (!encryptedPk) {
+      // if the cookie is not present, redirect the user to the login page
+      res.redirect('/users/login?message=You are not authorized to view that page. Please authenticate to continue 😎')
     } else {
-        // if they are allowed to be here, show them their profile
-        res.render('users/profile.ejs')
+      // decrypt the user ID and find the user in the database
+      const userId = parseInt(cryptoJs.AES.decrypt(encryptedPk, process.env.ENC_KEY).toString(cryptoJs.enc.Utf8));
+      db.user.findByPk(userId)
+        .then(user => {
+          if (!user) {
+            // if the user is not found in the database, redirect to the login page
+            res.redirect('/users/login?message=You are not authorized to view that page. Please authenticate to continue 😎')
+          } else {
+            // if the user is found in the database, render the profile page
+            res.render('users/profile.ejs', { user })
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          res.redirect('/');
+        })
     }
-})
+  })
+  
 
 // export the router instance
 module.exports = router

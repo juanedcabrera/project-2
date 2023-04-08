@@ -9,8 +9,19 @@
     <label for="content">Content:</label>
     <textarea name="content" required></textarea>
   
-    <label for="tags">Tags (comma separated):</label>
-    <input type="text" name="tags">
+    <label>Tags:</label>
+    <div>
+      <input type="checkbox" id="tag-happy" name="tags[]" value="happy">
+      <label for="tag-happy">Happy</label>
+    </div>
+    <div>
+      <input type="checkbox" id="tag-sad" name="tags[]" value="sad">
+      <label for="tag-sad">Sad</label>
+    </div>
+    <div>
+      <input type="checkbox" id="tag-confident" name="tags[]" value="confident">
+      <label for="tag-confident">Confident</label>
+    </div>
   
     <button type="submit">Save Entry</button>
   </form>

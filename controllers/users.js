@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 const db = require('../models')
 const bcrypt = require('bcrypt')
-const crytpoJs = require('crypto-js')
+const cryptoJs = require('crypto-js')
 
 // GET /users/new -- show route for a form that creates a new user (sign up for the app)
 router.get('/new', (req, res) => {
@@ -32,7 +32,7 @@ router.post('/', async (req, res) => {
             newUser.password = hashedPassed
             await newUser.save()
             // encypt the logged in user's id
-            const encryptedPk = crytpoJs.AES.encrypt(newUser.id.toString(), process.env.ENC_KEY)
+            const encryptedPk = cryptoJs.AES.encrypt(newUser.id.toString(), process.env.ENC_KEY)
             // set encrypted id as a cookie
             res.cookie('userId', encryptedPk.toString())
             // redirect user 
@@ -73,7 +73,7 @@ router.post('/login', async (req, res) => {
             res.redirect('/users/login?message=' + failedLoginMessage )
         } else {
             // if the user exists, they know the right password -- log them in
-            const encryptedPk = crytpoJs.AES.encrypt(foundUser.id.toString(), process.env.ENC_KEY)
+            const encryptedPk = cryptoJs.AES.encrypt(foundUser.id.toString(), process.env.ENC_KEY)
             // set encrypted id as a cookie
             res.cookie('userId', encryptedPk.toString())
             // redirect user 

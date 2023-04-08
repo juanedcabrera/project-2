@@ -7,11 +7,12 @@ const cryptoJs = require('crypto-js')
 router.get("/new", (req, res) => {
   res.render("entries/new.ejs");
 });
+
 // POST /entries -- CREATE route to add a new entry
 router.post("/", async (req, res) => {
   try {
     const title = req.body.title;
-    const body = req.body.body;
+    const content = req.body.content;
     const tags = req.body.tags;
 
     const decryptedPk = cryptoJs.AES.decrypt(
@@ -23,7 +24,7 @@ router.post("/", async (req, res) => {
 
     const newEntry = await db.entry.create({
       title: title,
-      body: body,
+      content: content,
       userId: user.id,
     });
 

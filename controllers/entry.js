@@ -35,32 +35,30 @@ router.post("/", async (req, res) => {
       userId: user.id,
     });
 
-    if (tags) {
-      const tagNames = [];
-
-      // If the "happy" tag is checked, add it to the tagNames array
-      if (tags.includes("happy")) {
-        tagNames.push("happy");
+    let foundTags = []
+    for (const tag of tags) {
+        let foundTag = await db.tag.findOne({
+          where: {
+            name: tag
+          }
+        })
+        foundTags.push(foundTag)
       }
 
-      // If the "sad" tag is checked, add it to the tagNames array
-      if (tags.includes("sad")) {
-        tagNames.push("sad");
-      }
+      newEntry.addTags(foundTags)
 
-      // If the "confident" tag is checked, add it to the tagNames array
-      if (tags.includes("confident")) {
-        tagNames.push("confident");
-      }
 
-      // Find or create tags and associate them with the new entry
-      const tagInstances = await Promise.all(
-        tagNames.map((tagName) =>
-          db.tag.findOrCreate({ where: { name: tagName } })
-        )
-      );
-      await newEntry.addTags(tagInstances.map((tag) => tag[0]));
-    }
+    // if (typeof tags === 'array') {
+    //   const tagEntries = await db.tag.bulkCreate(
+    //     tags.map(tag => ({ name: tag}))
+
+    //   )
+    // } else {
+    //   const tagEntry = await db.tag.create({
+    //     name:tags
+    //   })
+    // }
+
 
     res.redirect("/entries");
   } catch (err) {

@@ -15,8 +15,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   entry_tag.init({
-    entry_id: DataTypes.INTEGER,
-    tag_id: DataTypes.INTEGER
+    entryId: DataTypes.INTEGER,
+    tagId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'entry_tag',

@@ -1,0 +1,15 @@
+<%- include("../partials/header.ejs")%>
+
+<h2>Entries - show</h2>
+
+<h2><%= entry.title %></h2>
+
+<p><%= entry.content %></p>
+
+<p>Tag: <%= entry.tag %></p>
+
+<p>Created: <%= entry.createdAt %></p>
+
+<p>Last Updated: <%= entry.updatedAt %></p>
+
+<%- include("../partials/footer.ejs") %>

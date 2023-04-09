@@ -11,3 +11,15 @@ sequelize model:create --name user --attributes email:string,password:string
 2. options:
     a. edit BOTH the user model and user migration to add columns
     b. rm models/user.js migrations/<the user migration>.js and then rerun new model create command
+
+TO DO
+___________
+
+Tags are not being pushed into the entry
+Profile page setup (consider journal type choice )
+Navigation rewired
+
+Edit entries would love to put 24 hour time limit for edits
+Delete entries would love to put 24 hour time limit for edits
+
+Settings Page = where users could define some rules on edit, delete, journal type

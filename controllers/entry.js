@@ -71,10 +71,18 @@ router.post("/", async (req, res) => {
   }
 });
 
+
+
+
 // GET /entries -- INDEX route to show all the entries
 router.get('/', async (req, res) => {
+  console.log(`user is ${res.locals.user.email} `)
     try {
-        const entries = await db.entry.findAll()
+        const entries = await db.entry.findAll({
+          where: {
+            userId: res.locals.user.id
+        }
+      })
         res.render('entries/index.ejs', { entries})
     } catch (err) {
         console.log(err)
@@ -83,6 +91,28 @@ router.get('/', async (req, res) => {
 })
 
 // GET /entries/:id -- SHOW route to display a single entry
+router.get('/:id', async (req, res) => {
+  try {
+    const foundEntry = await db.entry.findAll({
+      where: {
+        // filter entry by current user logged in
+        userId: res.locals.user.id,
+        id: req.params.id
+      }
+    })
+    if(!foundEntry.length) {
+      // Entry not found redirect to index
+      return res.redirect('/entries?message=Entry not found')
+    } else {
+      // render show page for entry
+      res.render('entries/show.ejs', {
+        entry: foundEntry[0]
+      })}
+  } catch (err) {
+    console.log(err)
+    res.redirect('/entries?message=An error occured')
+  }
+})
 
 // GET /entries/:id/edit -- SHOW form to edit an entry
 

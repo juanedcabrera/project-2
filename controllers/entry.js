@@ -35,7 +35,7 @@ router.post("/", async (req, res) => {
   try {
     const title = req.body.title;
     const content = req.body.content;
-    const tags = req.body.tags;
+    let tags = req.body.tags; // had to change to let for tags to work
 
     const decryptedPk = cryptoJs.AES.decrypt(
       req.cookies.userId,
@@ -50,17 +50,22 @@ router.post("/", async (req, res) => {
       userId: user.id,
     });
 
-    let foundTags = []
-    for (const tag of tags) {
-        let foundTag = await db.tag.findOne({
-          where: {
-            name: tag
-          }
-        })
-        foundTags.push(foundTag)
-      }
+// tag logic
+let foundTags = []
+// convert to an array with a single element
+if (!Array.isArray(tags)) {
+  tags = [tags] 
+}
+for (let tag of tags) {
+  let foundTag = await db.tag.findOne({
+    where: {
+      name: tag
+    }
+  })
+  foundTags.push(foundTag)
+}
 
-      newEntry.addTags(foundTags)
+newEntry.addTags(foundTags)
 
 
     // if (typeof tags === 'array') {

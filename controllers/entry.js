@@ -4,10 +4,25 @@ const db = require("../models");
 const cryptoJs = require('crypto-js')
 
 // GET /entries/new -- SHOW form to create a new entry
-router.get('/new', (req, res) => {
-  const user = res.locals.user
-  res.render('entries/new.ejs', { user })
-})
+router.get('/new', async (req, res) => {
+  let quotes = []
+  const apiUrl = "https://api.themotivate365.com/stoic-quote"
+  try {
+    await fetch(apiUrl)
+    .then(res => res.json())
+    .then(data => {
+      quotes = data
+    })
+  } catch (err) {
+    console.log(err)
+  }
+
+  const user = res.locals.user;
+  res.render('entries/new.ejs', { 
+    user,
+    quotes
+   });
+  });
 
 // router.get('/unauthorized') method
 router.get('/unauthorized', function(req, res, next) {

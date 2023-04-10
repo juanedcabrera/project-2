@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../models");
 const cryptoJs = require("crypto-js");
+const methodOverride = require('method-override');
 
 // GET /entries/new -- SHOW form to create a new entry
 router.get("/new", async (req, res) => {
@@ -140,6 +141,33 @@ router.get("/:id/edit", async (req, res) => {
 });
 
 // PUT /entries/:id -- UPDATE route to modify an entry
+router.put("/:id", async (req, res) => {
+  try {
+    // Find the entry with the given ID
+    const foundEntry = await db.entry.findOne({
+      where: {
+        // filter entry by current user logged in
+        userId: res.locals.user.id,
+        id: req.params.id,
+      },
+    });
+    
+    // Update the entry with the new data
+    await foundEntry.update({
+      title: req.body.title,
+      content: req.body.content
+    });
+
+    // Redirect the user to the updated entry's detail page
+    res.redirect(`/entries/${foundEntry.id}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
+
 
 // export the router instance
 module.exports = router;

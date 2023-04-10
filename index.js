@@ -4,12 +4,15 @@ const express = require('express')
 const cookieParser = require('cookie-parser')
 const cryptoJs = require('crypto-js')
 const db = require('./models')
+const methodOverride = require('method-override');
+
 
 // app config
 const app = express()
 const PORT = process.env.PORT || 8000
 app.set('view engine', 'ejs')
 
+app.use(methodOverride('_method'))
 // middlewares
 // parse html from request bodies
 app.use(express.urlencoded({ extended: false }))

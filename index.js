@@ -11,7 +11,7 @@ const methodOverride = require('method-override');
 const app = express()
 const PORT = process.env.PORT || 8000
 app.set('view engine', 'ejs')
-
+app.use(express.static('public/'))
 app.use(methodOverride('_method'))
 // middlewares
 // parse html from request bodies

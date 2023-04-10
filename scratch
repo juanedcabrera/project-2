@@ -16,13 +16,16 @@ TO DO
 ___________
 
 [X] Tags are not being pushed into the entry
-[] Tags are not showing on the entry
-[] double check edit-entry.ejs
-[] create a landing page for when you login
-[] Profile page setup (consider journal type choice, about, commitment,  )
-[] Navigation rewired
+[X] Tags are not showing on the entry
+[X] double check edit-entry.ejs
+
 [X] Quotes showing
 [X] Edit entries; would love to put 24 hour time limit for edits
 [X] Delete entries; would love to put 24 hour time limit for edits
 
 [] Settings Page = where users could define some rules on edit, delete, journal type
+[] create a landing page for when you login
+[] Profile page setup (consider journal type choice, about, commitment,  )
+[] Navigation rewired
+[] streaks - Applaud when they've done consecutive days "Way to go! This is your 3rd day of posting" or "We've missed you we haven't seen you in 20 days"
+[] jsonb data for content 

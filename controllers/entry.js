@@ -4,6 +4,25 @@ const db = require("../models");
 const cryptoJs = require("crypto-js");
 const methodOverride = require('method-override');
 
+// GET /entries -- INDEX route to show all the entries
+router.get("/", async (req, res) => {
+  console.log(`user is ${res.locals.user.email} `);
+  try {
+    const entries = await db.entry.findAll({
+      where: {
+        userId: res.locals.user.id,
+      },
+      order: [
+        ['id', 'DESC']
+      ]
+    });
+    res.render("entries/index.ejs", { entries });
+  } catch (err) {
+    console.log(err);
+    res.redirect("/");
+  }
+});
+
 // GET /entries/new -- SHOW form to create a new entry
 router.get("/new", async (req, res) => {
   let quotes = [];
@@ -84,22 +103,6 @@ if (Array.isArray(tags) && tags.length > 0) {
     res.redirect("/");
   } finally {
     console.log("hello");
-  }
-});
-
-// GET /entries -- INDEX route to show all the entries
-router.get("/", async (req, res) => {
-  console.log(`user is ${res.locals.user.email} `);
-  try {
-    const entries = await db.entry.findAll({
-      where: {
-        userId: res.locals.user.id,
-      },
-    });
-    res.render("entries/index.ejs", { entries });
-  } catch (err) {
-    console.log(err);
-    res.redirect("/");
   }
 });
 

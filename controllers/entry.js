@@ -167,7 +167,28 @@ router.put("/:id", async (req, res) => {
 });
 
 
+// DELETE /entries/:id -- DELETE route to delete an entry
+router.delete("/:id", async (req, res) => {
+  try {
+    // Find the entry with the given ID
+    const foundEntry = await db.entry.findOne({
+      where: {
+        // filter entry by current user logged in
+        userId: res.locals.user.id,
+        id: req.params.id,
+      },
+    });
 
+    // Delete the entry
+    await foundEntry.destroy();
+
+    // Redirect the user to the entries list
+    res.redirect("/entries");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 // export the router instance
 module.exports = router;

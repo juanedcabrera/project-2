@@ -30,8 +30,7 @@ app.use((req, res, next) => {
 // routes and controllers
 app.get('/', (req, res) => {
     const user = res.locals.user
-    console.log(res.locals)
-    res.render("index.ejs", { user })
+    res.render("home.ejs", { user })
 })
 
 // middleware for authenticated routes

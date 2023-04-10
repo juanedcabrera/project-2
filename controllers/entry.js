@@ -53,22 +53,30 @@ router.post("/", async (req, res) => {
       userId: user.id,
     });
 
-    // tag logic
-    let foundTags = [];
-    // convert to an array with a single element
-    if (!Array.isArray(tags)) {
-      tags = [tags];
-    }
-    for (let tag of tags) {
-      let foundTag = await db.tag.findOne({
-        where: {
-          name: tag,
-        },
-      });
+// tag logic
+let foundTags = [];
+
+// check if tags is an array and is not empty
+if (Array.isArray(tags) && tags.length > 0) {
+
+  // loop through each tag in the array
+  for (let tag of tags) {
+    let foundTag = await db.tag.findOne({
+      where: {
+        name: tag,
+      },
+    });
+    if (foundTag) { // check if foundTag is not undefined
       foundTags.push(foundTag);
     }
-
+  }
+  
+  // add tags only if at least one tag was found
+  if (foundTags.length > 0) {
     newEntry.addTags(foundTags);
+  }
+}
+
 
     res.redirect("/entries");
   } catch (err) {
@@ -104,6 +112,14 @@ router.get("/:id", async (req, res) => {
         userId: res.locals.user.id,
         id: req.params.id,
       },
+      include: [{
+        model: db.tag,
+        as: 'tags',
+        attributes: ['name'],
+        through: {
+          attributes: []
+        }
+      }]
     });
     if (!foundEntry.length) {
       // Entry not found redirect to index

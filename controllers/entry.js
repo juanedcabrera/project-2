@@ -159,7 +159,7 @@ router.put("/:id", async (req, res) => {
     });
 
     // Redirect the user to the updated entry's detail page
-    res.redirect(`/entries/${foundEntry.id}`);
+    res.redirect("/entries");
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");

@@ -17,10 +17,12 @@ ___________
 
 [X] Tags are not being pushed into the entry
 [] Tags are not showing on the entry
-[] Profile page setup (consider journal type choice )
+[] double check edit-entry.ejs
+[] create a landing page for when you login
+[] Profile page setup (consider journal type choice, about, commitment,  )
 [] Navigation rewired
 [X] Quotes showing
-[] Edit entries would love to put 24 hour time limit for edits
-[] Delete entries would love to put 24 hour time limit for edits
+[X] Edit entries; would love to put 24 hour time limit for edits
+[X] Delete entries; would love to put 24 hour time limit for edits
 
 [] Settings Page = where users could define some rules on edit, delete, journal type

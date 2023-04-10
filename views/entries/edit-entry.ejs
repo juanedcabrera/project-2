@@ -3,7 +3,7 @@
 <h1>Edit Entry</h1>
 
 
-<form method="POST" action="/entries/<%= entry.id %>/edit?_method=PUT">
+<form method="POST" action="/entries/<%= entry.id %>?_method=PUT">
   <div>
     <label for="title">Title</label>
     <input type="text" id="title" name="title" value="<%= entry.title %>">

@@ -7,10 +7,12 @@
 
 <p><%= entry.content %></p>
 
-<p>Tag: <%= entry.tag %></p>
+<p>Tag: <%= entry.foundTag %></p>
 
 <p>Created: <%= entry.createdAt %></p>
 
 <p>Last Updated: <%= entry.updatedAt %></p>
+
+<a href="/entries/<%= entry.id %>/edit">Edit Entry</a>
 
 <%- include("../partials/footer.ejs") %>

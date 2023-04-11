@@ -25,18 +25,13 @@
     <input type="text" name="content5" required>
   
     <h4>Tags:</h4>
-    <div>
-      <input type="checkbox" id="tag-happy" name="tags" value="happy">
-      <label for="tag-happy">Happy</label>
-    </div>
-    <div>
-      <input type="checkbox" id="tag-sad" name="tags" value="sad">
-      <label for="tag-sad">Sad</label>
-    </div>
-    <div>
-      <input type="checkbox" id="tag-confident" name="tags" value="confident">
-      <label for="tag-confident">Confident</label>
-    </div>
+    <% for (const adj of adjectives) { %>
+      <div>
+        <input type="checkbox" id="tag-<%= adj.toLowerCase() %>" name="tags" value="<%= adj.toLowerCase() %>">
+        <label for="tag-<%= adj.toLowerCase() %>"><%= adj %></label>
+      </div>
+    <% } %>
+    
   
     <button type="submit">Save Entry</button>
   </form>

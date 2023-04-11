@@ -3,6 +3,37 @@ const router = express.Router();
 const db = require("../models");
 const cryptoJs = require("crypto-js");
 const methodOverride = require('method-override');
+const adjectives = [
+  "Accomplishment",
+  "Adventure",
+  "Comfort",
+  "Contentment",
+  "Creativity",
+  "Empowered",
+  "Excitement",
+  "Family",
+  "Friendship",
+  "Gracious",
+  "Grateful",
+  "Growth",
+  "Health",
+  "Hopeful",
+  "Inspired",
+  "Joyful",
+  "Learning",
+  "Love",
+  "Mindfulness",
+  "Nature",
+  "Nostalgic",
+  "Overwhelmed",
+  "Peaceful",
+  "Positivity",
+  "Reflection",
+  "Relationships",
+  "Sadded",
+  "Spiritual",
+  "Success"
+];
 
 // GET /entries -- INDEX route to show all the entries
 router.get("/", async (req, res) => {
@@ -35,11 +66,12 @@ router.get("/new", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-
+  
   const user = res.locals.user;
   res.render("entries/new.ejs", {
     user,
     quotes,
+    adjectives: adjectives
   });
 });
 
@@ -72,40 +104,66 @@ router.post("/", async (req, res) => {
 
     const newEntry = await db.entry.create({
       userId: user.id,
-      title: title,
       content: content,
     });
 
-    // tag logic
-    let foundTags = [];
+    if (tags) {
+      const tagNames = [];
 
-    // check if tags is an array and is not empty
-    if (Array.isArray(tags) && tags.length > 0) {
-
-      // loop through each tag in the array
-      for (let tag of tags) {
-        let foundTag = await db.tag.findOne({
-          where: {
-            name: tag,
-          },
-        });
-        if (foundTag) { // check if foundTag is not undefined
-          foundTags.push(foundTag);
+      // for loop to format the adjectives
+      for (const adjective of adjectives) {
+        if (tags.includes(adjective.toLowerCase())) {
+          tagNames.push(adjective.toLowerCase());
         }
       }
 
-      // add tags only if at least one tag was found
-      if (foundTags.length > 0) {
-        newEntry.addTags(foundTags);
-      }
+      // Find or create tags and associate them with the new entry
+      const tagInstances = await Promise.all(
+        tagNames.map((tagName) =>
+          db.tag.findOrCreate({ where: { name: tagName } })
+        )
+      );
+      await newEntry.addTags(tagInstances.map((tag) => tag[0]));
     }
 
     res.redirect("/entries");
   } catch (err) {
     console.log(err);
-    res.render("error");
+    res.redirect("/");
+  } finally {
+    console.log('hello')
   }
 });
+//     // tag logic
+//     let foundTags = [];
+
+//     // check if tags is an array and is not empty
+//     if (Array.isArray(tags) && tags.length > 0) {
+
+//       // loop through each tag in the array
+//       for (let tag of tags) {
+//         let foundTag = await db.tag.findOne({
+//           where: {
+//             name: tag,
+//           },
+//         });
+//         if (foundTag) { // check if foundTag is not undefined
+//           foundTags.push(foundTag);
+//         }
+//       }
+
+//       // add tags only if at least one tag was found
+//       if (foundTags.length > 0) {
+//         newEntry.addTags(foundTags);
+//       }
+//     }
+
+//     res.redirect("/entries");
+//   } catch (err) {
+//     console.log(err);
+//     res.render("error");
+//   }
+// });
 
 
 // GET /entries/:id -- SHOW route to display a single entry

@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require("../models");
 const cryptoJs = require("crypto-js");
 const methodOverride = require('method-override');
+const { Op, Sequelize } = require('sequelize');
 const adjectives = [
   "Accomplishment",
   "Adventure",
@@ -38,18 +39,51 @@ const adjectives = [
 // GET /entries -- INDEX route to show all the entries
 router.get("/", async (req, res) => {
   try {
-    const entries = await db.entry.findAll({
+    const { word, tag, date } = req.query;
+    const searchOptions = {
       where: {
         userId: res.locals.user.id,
       },
       order: [
         ['id', 'DESC']
       ]
-    });
+    };
+    if (tag) {
+      searchOptions.include = [
+        {
+          model: db.tag,
+          where: {
+            name: tag
+          }
+        }
+      ];
+    }
+    if (date) {
+      const startDate = new Date(date);
+      startDate.setHours(0, 0, 0, 0);
+      const endDate = new Date(date);
+      endDate.setHours(23, 59, 59, 999);
+      searchOptions.where.createdAt = {
+      [Op.between]: [startDate, endDate]
+      }
+    }
+
+    if (word) {
+      searchOptions.where.content = {
+        [Op.and]: [
+          Sequelize.where(
+            Sequelize.cast(Sequelize.col('content'), 'text'),
+            'ILIKE',
+            `%${word}%`
+          )
+        ]
+      };
+    }
+
+    const entries = await db.entry.findAll(searchOptions);
     res.render("entries/index.ejs", { entries });
   } catch (err) {
     console.log(err);
-    // res.redirect("/");
   }
 });
 
@@ -228,5 +262,16 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+// GET /entries/search
+
+router.get("/search", async (req, res) => {
+  try {res.send("hello search")
+  } catch (err) {
+    console.log(err);
+  }
+  
+  const user = res.locals.user;
+  res.render("entries/search.ejs");
+});
 // export the router instance
 module.exports = router;

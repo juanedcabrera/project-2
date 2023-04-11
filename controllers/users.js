@@ -26,7 +26,7 @@ router.get("/login", (req, res) => {
 // GET /users/profile -- take user to their profile page
 router.get("/profile", (req, res) => {
   const user = res.locals.user;
-  res.render("users/profile.ejs", { user });
+  res.render("users/profile.ejs", { user, message:req.query.message });
 });
 
 // POST /users -- CREATE a new user from the form @ GET /users/new
@@ -142,5 +142,29 @@ router.get("/main", (req, res) => {
   }
 });
 
+// PUT route to update the user's password
+router.put("/profile", async (req, res) => {
+  try{
+    const {newPassword} = req.body
+    const {user} = res.locals
+    
+    // Hash new pw
+    const hashedPassword = await bcrypt.hash(newPassword, 12)
+
+    // Update pw in db
+    await db.user.update ({password:hashedPassword}, {where: {id:user.id}});
+
+    const successfulPasswordCreatedMessage = "New Password Created 🥳";
+    res.redirect("/users/profile?message=" + successfulPasswordCreatedMessage)
+
+  } catch (err) {
+    console.log(err)
+    res.status(500).send('Internal Server Error')
+  }
+  })
+
+
 // export the router instance
 module.exports = router;
+
+

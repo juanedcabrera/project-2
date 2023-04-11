@@ -2,6 +2,22 @@
 
 <h2>Entries - index</h2>
 
+<form action="/entries" method="GET">
+  <div>
+    <label for="word">Word:</label>
+    <input type="text" name="word" id="word">
+  </div>
+  <div>
+    <label for="tag">Tag:</label>
+    <input type="text" name="tag" id="tag">
+  </div>
+  <div>
+    <label for="date">Date:</label>
+    <input type="date" name="date" id="date">
+  </div>
+  <button type="submit">Search</button>
+</form>
+
 <ul>
   <% entries.forEach((entry) => {
     const createdAt = new Date(entry.createdAt);

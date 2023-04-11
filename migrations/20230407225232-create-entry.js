@@ -12,11 +12,8 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER
       },
-      title: {
-        type: Sequelize.STRING
-      },
       content: {
-        type: Sequelize.STRING
+        type: Sequelize.JSONB
       },
       createdAt: {
         allowNull: false,

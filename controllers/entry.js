@@ -55,7 +55,13 @@ router.get("/unauthorized", function (req, res, next) {
 router.post("/", async (req, res) => {
   try {
     const title = req.body.title;
-    const content = req.body.content;
+    const content = {
+      content1: req.body.content1,
+      content2: req.body.content2,
+      content3: req.body.content3,
+      content4: req.body.content4,
+      content5: req.body.content5,
+    };
     let tags = req.body.tags; // had to change to let for tags to work
 
     const decryptedPk = cryptoJs.AES.decrypt(
@@ -66,44 +72,42 @@ router.post("/", async (req, res) => {
     const user = await db.user.findByPk(decryptedPkString);
 
     const newEntry = await db.entry.create({
+      userId: user.id,
       title: title,
       content: content,
-      userId: user.id,
     });
 
-// tag logic
-let foundTags = [];
+    // tag logic
+    let foundTags = [];
 
-// check if tags is an array and is not empty
-if (Array.isArray(tags) && tags.length > 0) {
+    // check if tags is an array and is not empty
+    if (Array.isArray(tags) && tags.length > 0) {
 
-  // loop through each tag in the array
-  for (let tag of tags) {
-    let foundTag = await db.tag.findOne({
-      where: {
-        name: tag,
-      },
-    });
-    if (foundTag) { // check if foundTag is not undefined
-      foundTags.push(foundTag);
+      // loop through each tag in the array
+      for (let tag of tags) {
+        let foundTag = await db.tag.findOne({
+          where: {
+            name: tag,
+          },
+        });
+        if (foundTag) { // check if foundTag is not undefined
+          foundTags.push(foundTag);
+        }
+      }
+
+      // add tags only if at least one tag was found
+      if (foundTags.length > 0) {
+        newEntry.addTags(foundTags);
+      }
     }
-  }
-  
-  // add tags only if at least one tag was found
-  if (foundTags.length > 0) {
-    newEntry.addTags(foundTags);
-  }
-}
-
 
     res.redirect("/entries");
   } catch (err) {
     console.log(err);
-    res.redirect("/");
-  } finally {
-    console.log("hello");
+    res.render("error");
   }
 });
+
 
 // GET /entries/:id -- SHOW route to display a single entry
 router.get("/:id", async (req, res) => {

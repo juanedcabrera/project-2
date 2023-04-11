@@ -17,8 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   entry.init({
     userId: DataTypes.INTEGER,
-    title: DataTypes.STRING,
-    content: DataTypes.STRING
+    content: DataTypes.JSONB
   }, {
     sequelize,
     modelName: 'entry',

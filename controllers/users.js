@@ -29,6 +29,39 @@ router.get("/profile", (req, res) => {
   res.render("users/profile.ejs", { user });
 });
 
+// POST /users -- CREATE a new user from the form @ GET /users/new
+router.post('/', async (req, res) => {
+  try {
+      console.log(req.body)
+      // do a find or create with the user's given email
+      const [newUser, created] = await db.user.findOrCreate({
+          where: {
+              email: req.body.email
+          }
+      })
+      if (!created) {
+          // if the user's returns as found -- don't let them sign up
+          console.log('user account exists')
+          // instead redirect them to the log in page
+          res.redirect('/users/login?message=Please login to your account to continue 🙈')
+      } else {
+          // hash the users's password before we add it to the db
+          const hashedPassed = bcrypt.hashSync(req.body.password, 12)
+          // save the user in the db
+          newUser.password = hashedPassed
+          await newUser.save()
+          // encypt the logged in user's id
+          const encryptedPk = cryptoJs.AES.encrypt(newUser.id.toString(), process.env.ENC_KEY)
+          // set encrypted id as a cookie
+          res.cookie('userId', encryptedPk.toString())
+          // redirect user 
+          res.redirect('/users/profile')
+      }
+  } catch (error) {
+      console.log(error)
+      res.redirect('/')
+  }
+})
 
 // POST /users/login -- authenticate a user's credentials
 router.post("/login", async (req, res) => {

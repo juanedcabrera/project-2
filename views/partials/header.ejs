@@ -11,7 +11,7 @@
     <nav>
       <ul>
         <!-- shown whether the user is logged in or out -->
-        <li><a href="/">Home</a></li>
+
         <!-- shown when the user is logged in -->
         <% if (typeof user !== 'undefined' && user) { %>
         <li><a href="/users/main">Main</a></li>
@@ -21,6 +21,7 @@
         <li><a href="/users/logout">Logout</a></li>
         <% } else { %>
         <!-- shown when the user is logged out -->
+        <li><a href="/">Home</a></li>
         <li><a href="/users/new">Sign Up</a></li>
         <li><a href="/users/login">Sign In</a></li>
         <% } %>

@@ -27,14 +27,7 @@ app.use((req, res, next) => {
     next() // tells express that this middleware has finished
 })
 
-// routes and controllers
-app.get('/', (req, res) => {
-    const user = res.locals.user
-    res.render("home.ejs", { user })
-})
-
-// middleware for authenticated routes
-const requireAuth = async (req, res, next) => {
+app.use(async (req, res, next) => {
     try {
         // check if there is a cookie
         if (req.cookies.userId) {
@@ -47,19 +40,31 @@ const requireAuth = async (req, res, next) => {
             res.locals.user = user
             next() // go to the next thing no matter what
         } else {
-            // if there is no cookie, set return an authorized error
-            return res.render('unauthorized.ejs')
+            // if there is no cookie, return an unauthorized error
+            res.locals.user = null
+            next()
         }
     } catch (error) {
         console.log(error)
         // if something goes wrong
-        // give unauthorized error
-        return res.render('unauthorized.ejs')
-    } 
-};
+        // return an unauthorized error
+        res.locals.user = null
+    }
+})
+
+
+  // routes and controllers
+app.get('/', (req, res) => {
+    if (res.locals.user) {
+        res.render("home.ejs")
+    } else {
+       res.render('index-not-signed-in.ejs')
+    }
+})
 
 app.use('/users', require('./controllers/users.js'))
-app.use('/entries', requireAuth, require('./controllers/entry.js'))
+app.use('/entries', require('./controllers/entry.js'))
+
 
 // listen a port
 app.listen(PORT, () => {

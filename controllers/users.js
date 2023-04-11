@@ -7,64 +7,28 @@ const cryptoJs = require("crypto-js");
 
 // GET /users/new -- show route for a form that creates a new user (sign up for the app)
 router.get("/new", (req, res) => {
-  const user = res.locals.user;
-  res.render("users/new.ejs", { user });
-});
-
-// GET /users/new -- show route for a form that creates a new user (sign up for the app)
-router.get("/profile", (req, res) => {
-  const user = res.locals.user;
-  res.render("users/profile.ejs", { user });
-});
-
-// POST /users -- CREATE a new user from the form @ GET /users/new
-router.post("/", async (req, res) => {
-  try {
-    console.log(req.body);
-    // do a find or create with the user's given email
-    const [newUser, created] = await db.user.findOrCreate({
-      where: {
-        email: req.body.email,
-      },
-    });
-    if (!created) {
-      // if the user's returns as found -- don't let them sign up
-      console.log("user account exists");
-      // instead redirect them to the log in page
-      res.redirect(
-        "/users/login?message=Please login to your account to continue 🙈"
-      );
-    } else {
-      // hash the users's password before we add it to the db
-      const hashedPassed = bcrypt.hashSync(req.body.password, 12);
-      // save the user in the db
-      newUser.password = hashedPassed;
-      await newUser.save();
-      // encypt the logged in user's id
-      const encryptedPk = cryptoJs.AES.encrypt(
-        newUser.id.toString(),
-        process.env.ENC_KEY
-      );
-      // set encrypted id as a cookie
-      res.cookie("userId", encryptedPk.toString());
-      // redirect user
-      res.redirect("/users/main");
-    }
-  } catch (error) {
-    console.log(error);
-    res.redirect("/");
+  if (res.locals.user) {
+    res.redirect("./main");
+  } else {
+    res.render("users/new.ejs");
   }
 });
 
 // GET /users/login -- show route for a form that lets a user login
 router.get("/login", (req, res) => {
-  console.log(req.query);
-  const user = res.locals.user;
-  res.render("users/login.ejs", {
-    user,
-    message: req.query.message ? req.query.message : null,
-  });
+  if (res.locals.user) {
+    res.redirect("./main");
+  } else {
+    res.render("users/login.ejs", { message: req.query.message });
+  }
 });
+
+// GET /users/profile -- take user to their profile page
+router.get("/profile", (req, res) => {
+  const user = res.locals.user;
+  res.render("users/profile.ejs", { user });
+});
+
 
 // POST /users/login -- authenticate a user's credentials
 router.post("/login", async (req, res) => {
@@ -109,7 +73,7 @@ router.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-// GET /users/profile -- show authorized users their profile page
+// GET /users/main -- show authorized users their main page
 router.get("/main", (req, res) => {
   // check for the userId cookie
   const encryptedPk = req.cookies.userId;
@@ -134,13 +98,13 @@ router.get("/main", (req, res) => {
             "/users/login?message=You are not authorized to view that page. Please authenticate to continue 😎"
           );
         } else {
-          // if the user is found in the database, render the profile page
+          // if the user is found in the database, render the main page
           res.render("users/main.ejs", { user });
         }
       })
       .catch((error) => {
         console.log(error);
-        res.redirect("/");
+        // res.redirect("/");
       });
   }
 });

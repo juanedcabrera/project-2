@@ -6,7 +6,6 @@ const methodOverride = require('method-override');
 
 // GET /entries -- INDEX route to show all the entries
 router.get("/", async (req, res) => {
-  console.log(`user is ${res.locals.user.email} `);
   try {
     const entries = await db.entry.findAll({
       where: {
@@ -19,7 +18,7 @@ router.get("/", async (req, res) => {
     res.render("entries/index.ejs", { entries });
   } catch (err) {
     console.log(err);
-    res.redirect("/");
+    // res.redirect("/");
   }
 });
 

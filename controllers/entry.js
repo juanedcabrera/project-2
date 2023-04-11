@@ -107,63 +107,22 @@ router.post("/", async (req, res) => {
       content: content,
     });
 
-    if (tags) {
-      const tagNames = [];
-
-      // for loop to format the adjectives
-      for (const adjective of adjectives) {
-        if (tags.includes(adjective.toLowerCase())) {
-          tagNames.push(adjective.toLowerCase());
-        }
+// tag logic
+    if (Array.isArray(tags) && tags.length > 0) {
+      const tagLookups = tags.map(tagName => db.tag.findOne({ where: { name: tagName } }));
+      const foundTags = await Promise.all(tagLookups);
+      const validTags = foundTags.filter(tag => tag !== null);
+      if (validTags.length > 0) {
+        await newEntry.addTags(validTags);
       }
-
-      // Find or create tags and associate them with the new entry
-      const tagInstances = await Promise.all(
-        tagNames.map((tagName) =>
-          db.tag.findOrCreate({ where: { name: tagName } })
-        )
-      );
-      await newEntry.addTags(tagInstances.map((tag) => tag[0]));
     }
 
-    res.redirect("/entries");
+    await res.redirect("/entries");
   } catch (err) {
     console.log(err);
-    res.redirect("/");
-  } finally {
-    console.log('hello')
+    res.render("error");
   }
 });
-//     // tag logic
-//     let foundTags = [];
-
-//     // check if tags is an array and is not empty
-//     if (Array.isArray(tags) && tags.length > 0) {
-
-//       // loop through each tag in the array
-//       for (let tag of tags) {
-//         let foundTag = await db.tag.findOne({
-//           where: {
-//             name: tag,
-//           },
-//         });
-//         if (foundTag) { // check if foundTag is not undefined
-//           foundTags.push(foundTag);
-//         }
-//       }
-
-//       // add tags only if at least one tag was found
-//       if (foundTags.length > 0) {
-//         newEntry.addTags(foundTags);
-//       }
-//     }
-
-//     res.redirect("/entries");
-//   } catch (err) {
-//     console.log(err);
-//     res.render("error");
-//   }
-// });
 
 
 // GET /entries/:id -- SHOW route to display a single entry

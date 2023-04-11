@@ -54,7 +54,6 @@ router.get("/unauthorized", function (req, res, next) {
 // POST /entries -- CREATE route to add a new entry
 router.post("/", async (req, res) => {
   try {
-    const title = req.body.title;
     const content = {
       content1: req.body.content1,
       content2: req.body.content2,

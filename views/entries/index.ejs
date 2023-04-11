@@ -3,9 +3,20 @@
 <h2>Entries - index</h2>
 
 <ul>
-    <% entries.forEach((entry) => { %>
-      <li><a href="/entries/<%= entry.id %>"><%= entry.createdAt %></a></li>
-    <% }); %>
+  <% entries.forEach((entry) => {
+    const createdAt = new Date(entry.createdAt);
+    const options = {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric'
+    };
+    const dateString = createdAt.toLocaleDateString('en-US', options);
+    const hour = createdAt.getHours();
+    const greeting = hour < 12 ? 'Morning' : 'Evening';
+  %>
+    <li><a href="/entries/<%= entry.id %>"><%= dateString %> <%= greeting %> Post</a></li>
+  <% }); %>
 </ul>
+
 
 <%- include("../partials/footer.ejs") %>

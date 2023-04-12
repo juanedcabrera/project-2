@@ -5,6 +5,7 @@ const db = require("../models");
 const bcrypt = require("bcrypt");
 const cryptoJs = require("crypto-js");
 
+
 // GET /users/new -- show route for a form that creates a new user (sign up for the app)
 router.get("/new", (req, res) => {
   if (res.locals.user) {
@@ -107,40 +108,62 @@ router.get("/logout", (req, res) => {
 });
 
 // GET /users/main -- show authorized users their main page
-router.get("/main", (req, res) => {
-  // check for the userId cookie
-  const encryptedPk = req.cookies.userId;
-  if (!encryptedPk) {
-    // if the cookie is not present, redirect the user to the login page
-    res.redirect(
-      "/users/login?message=You are not authorized to view that page. Please authenticate to continue 😎"
-    );
-  } else {
+router.get("/main", async (req, res) => {
+  try {
+    // check for the userId cookie
+    const encryptedPk = req.cookies.userId;
+    if (!encryptedPk) {
+      // if the cookie is not present, redirect the user to the login page
+      res.redirect(
+        "/users/login?message=You are not authorized to view that page. Please authenticate to continue 😎"
+      );
+      return;
+    }
+
     // decrypt the user ID and find the user in the database
     const userId = parseInt(
       cryptoJs.AES.decrypt(encryptedPk, process.env.ENC_KEY).toString(
         cryptoJs.enc.Utf8
       )
     );
-    db.user
-      .findByPk(userId)
-      .then((user) => {
-        if (!user) {
-          // if the user is not found in the database, redirect to the login page
-          res.redirect(
-            "/users/login?message=You are not authorized to view that page. Please authenticate to continue 😎"
-          );
-        } else {
-          // if the user is found in the database, render the main page
-          res.render("users/main.ejs", { user });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        // res.redirect("/");
-      });
+    const user = await db.user.findByPk(userId);
+    if (!user) {
+      // if the user is not found in the database, redirect to the login page
+      res.redirect(
+        "/users/login?message=You are not authorized to view that page. Please authenticate to continue 😎"
+      );
+      return;
+    }
+
+    // Get the user's most recent post
+    const lastPost = await db.entry.findOne({
+      where: { userId: user.id },
+      order: [["createdAt", "DESC"]],
+    });
+
+    if (!lastPost) {
+      // User has never posted before
+      res.render("users/main.ejs", { user, currentStreak: 0, longestStreak: 0 });
+      return;
+    }
+
+    // Calculate current streak and longest streak
+    const currentDate = new Date();
+    const lastPostDate = new Date(lastPost.createdAt);
+    const timeDiff = currentDate.getTime() - lastPostDate.getTime();
+    const dayDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
+    const currentStreak = dayDiff === 1 ? user.currentStreak + 1 : 0;
+    const longestStreak = Math.max(user.longestStreak, currentStreak);
+    
+    await db.user.update ({current_streak:currentStreak, longest_streak:longestStreak}, {where: {id:user.id}})
+
+    res.render("users/main.ejs", { user, currentStreak, longestStreak });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Internal Server Error");
   }
 });
+
 
 // PUT route to update the user's password
 router.put("/profile", async (req, res) => {

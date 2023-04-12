@@ -9,11 +9,29 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      first_name: {
+        type: Sequelize.TEXT
+      },
+      last_name: {
+        type: Sequelize.TEXT
+      },
       email: {
         type: Sequelize.STRING
       },
       password: {
         type: Sequelize.STRING
+      },
+      current_streak: {
+        type: Sequelize.INTEGER
+      },
+      longest_streak: {
+        type: Sequelize.INTEGER
+      },
+      commitment: {
+        type: Sequelize.TEXT
+      },
+      motivation: {
+        type: Sequelize.TEXT
       },
       createdAt: {
         allowNull: false,

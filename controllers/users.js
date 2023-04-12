@@ -26,45 +26,49 @@ router.get("/login", (req, res) => {
 // GET /users/profile -- take user to their profile page
 router.get("/profile", (req, res) => {
   const user = res.locals.user;
-  res.render("users/profile.ejs", { user, message:req.query.message });
+  res.render("users/profile.ejs", { user, message: req.query.message });
 });
 
 // POST /users -- CREATE a new user from the form @ GET /users/new
-router.post('/', async (req, res) => {
+router.post("/", async (req, res) => {
   try {
-      console.log(req.body)
-      // do a find or create with the user's given email
-      const [newUser, created] = await db.user.findOrCreate({
-          where: {
-              email: req.body.email
-          },
-          defaults: {
-              first_name: req.body.first_name,
-              last_name: req.body.last_name,
-              current_streak: 0,
-              longest_streak: 0,
-              password: bcrypt.hashSync(req.body.password, 12)
-          }
-      })
-      if (!created) {
-          // if the user's returns as found -- don't let them sign up
-          console.log('user account exists')
-          // instead redirect them to the log in page
-          res.redirect('/users/login?message=Please login to your account to continue 🙈')
-      } else {
-          // encypt the logged in user's id
-          const encryptedPk = cryptoJs.AES.encrypt(newUser.id.toString(), process.env.ENC_KEY)
-          // set encrypted id as a cookie
-          res.cookie('userId', encryptedPk.toString())
-          // redirect user 
-          res.redirect('/users/main')
-      }
+    console.log(req.body);
+    // do a find or create with the user's given email
+    const [newUser, created] = await db.user.findOrCreate({
+      where: {
+        email: req.body.email,
+      },
+      defaults: {
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        current_streak: 0,
+        longest_streak: 0,
+        password: bcrypt.hashSync(req.body.password, 12),
+      },
+    });
+    if (!created) {
+      // if the user's returns as found -- don't let them sign up
+      console.log("user account exists");
+      // instead redirect them to the log in page
+      res.redirect(
+        "/users/login?message=Please login to your account to continue 🙈"
+      );
+    } else {
+      // encypt the logged in user's id
+      const encryptedPk = cryptoJs.AES.encrypt(
+        newUser.id.toString(),
+        process.env.ENC_KEY
+      );
+      // set encrypted id as a cookie
+      res.cookie("userId", encryptedPk.toString());
+      // redirect user
+      res.redirect("/users/main");
+    }
   } catch (error) {
-      console.log(error)
-      res.redirect('/')
+    console.log(error);
+    res.redirect("/");
   }
-})
-
+});
 
 // POST /users/login -- authenticate a user's credentials
 router.post("/login", async (req, res) => {
@@ -145,7 +149,11 @@ router.get("/main", async (req, res) => {
 
     if (!lastPost) {
       // User has never posted before
-      res.render("users/main.ejs", { user, currentStreak: 0, longestStreak: 0 });
+      res.render("users/main.ejs", {
+        user,
+        currentStreak: 0,
+        longestStreak: 0,
+      });
       return;
     }
 
@@ -156,8 +164,11 @@ router.get("/main", async (req, res) => {
     const dayDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
     const currentStreak = dayDiff === 1 ? user.currentStreak + 1 : 0;
     const longestStreak = Math.max(user.longestStreak || 0, currentStreak);
-    
-    await db.user.update ({current_streak:currentStreak, longest_streak:longestStreak}, {where: {id:user.id}})
+
+    await db.user.update(
+      { current_streak: currentStreak, longest_streak: longestStreak },
+      { where: { id: user.id } }
+    );
 
     res.render("users/main.ejs", { user, currentStreak, longestStreak });
   } catch (err) {
@@ -166,32 +177,47 @@ router.get("/main", async (req, res) => {
   }
 });
 
-
-// PUT route to update the user's password
+// PUT route to update the user's password and commitment
 router.put("/profile", async (req, res) => {
-  try{
-    const {newPassword} = req.body
-    const {user} = res.locals
-    
-    // Hash new pw
-    const hashedPassword = await bcrypt.hash(newPassword, 12)
+  try {
+    const { newPassword, motivation, reward, deterrent, signature } = req.body;
+    const { user } = res.locals;
 
-    // Update pw in db
-    await db.user.update ({password:hashedPassword}, {where: {id:user.id}});
+    let message;
 
-    const successfulPasswordCreatedMessage = "New Password Created 🥳";
-    res.redirect("/users/profile?message=" + successfulPasswordCreatedMessage)
+    if (newPassword) {
+      // Hash new password
+      const hashedPassword = await bcrypt.hash(newPassword, 12);
 
+      // Update password in db
+      await db.user.update(
+        { password: hashedPassword },
+        { where: { id: user.id } }
+      );
+
+      message = "New password created 🥳";
+    }
+
+    if (motivation || reward || deterrent || signature) {
+      // Combine commitment parts into JSON object
+      const commitment = { motivation, reward, deterrent, signature };
+      console.log(commitment)
+      // Update commitment in db
+      await db.user.update(
+        { commitment },
+        { where: { id: user.id } }
+      );
+
+      message = "Commitment updated 🥳";
+    }
+
+    res.redirect(`/users/profile?message=${message}`);
   } catch (err) {
-    console.log(err)
-    res.status(500).send('Internal Server Error')
+    console.log(err);
+    res.status(500).send("Internal Server Error");
   }
-  })
-
-
+});
 
 
 // export the router instance
 module.exports = router;
-
-

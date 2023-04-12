@@ -15,4 +15,26 @@
   <button type="submit">Reset Password</button>
 </form>
 
+<form method="POST" action="/users/profile?_method=PUT">
+  <div>
+    <label for="motivation">Motivation - Why do you want to journal?</label>
+    <input name="motivation" id="motivation" required>
+  </div>
+  <div>
+    <label for="reward">Reward - What will you give yourself if you meet a journaling goal?</label>
+    <input name="reward" id="reward" required>
+  </div>
+  <div>
+    <label for="deterrent">Deterrent - What will you give up if you fail to meet that goal?</label>
+    <input name="deterrent" id="deterrent" required>
+  </div>
+  <div>
+    <label for="signature">Signature</label>
+    <input name="signature" id="signature" required>
+  </div>
+
+  <button type="submit">Submit</button>
+</form>
+
+
 <%- include('../partials/footer.ejs') %>

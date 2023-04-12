@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const db = require("../models");
 const cryptoJs = require("crypto-js");
-const methodOverride = require('method-override');
-const { Op, Sequelize } = require('sequelize');
+const methodOverride = require("method-override");
+const { Op, Sequelize } = require("sequelize");
 const adjectives = [
   "Accomplishment",
   "Adventure",
@@ -33,7 +33,7 @@ const adjectives = [
   "Relationships",
   "Sadded",
   "Spiritual",
-  "Success"
+  "Success",
 ];
 
 // GET /entries -- INDEX route to show all the entries
@@ -44,18 +44,16 @@ router.get("/", async (req, res) => {
       where: {
         userId: res.locals.user.id,
       },
-      order: [
-        ['id', 'DESC']
-      ]
+      order: [["id", "DESC"]],
     };
     if (tag) {
       searchOptions.include = [
         {
           model: db.tag,
           where: {
-            name: tag
-          }
-        }
+            name: tag,
+          },
+        },
       ];
     }
     if (date) {
@@ -64,19 +62,19 @@ router.get("/", async (req, res) => {
       const endDate = new Date(date);
       endDate.setHours(23, 59, 59, 999);
       searchOptions.where.createdAt = {
-      [Op.between]: [startDate, endDate]
-      }
+        [Op.between]: [startDate, endDate],
+      };
     }
 
     if (word) {
       searchOptions.where.content = {
         [Op.and]: [
           Sequelize.where(
-            Sequelize.cast(Sequelize.col('content'), 'text'),
-            'ILIKE',
+            Sequelize.cast(Sequelize.col("content"), "text"),
+            "ILIKE",
             `%${word}%`
-          )
-        ]
+          ),
+        ],
       };
     }
 
@@ -100,12 +98,12 @@ router.get("/new", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-  
+
   const user = res.locals.user;
   res.render("entries/new.ejs", {
     user,
     quotes,
-    adjectives: adjectives
+    adjectives: adjectives,
   });
 });
 
@@ -141,26 +139,26 @@ router.post("/", async (req, res) => {
       content: content,
     });
 
-// tag logic
-if (Array.isArray(tags) && tags.length > 0) {
-  const tagLookups = tags.map(tagName => db.tag.findOne({ where: { name: tagName } }));
-  const foundTags = await Promise.all(tagLookups);
-  console.log('foundTags:', foundTags);
-  const validTags = foundTags.filter(tag => tag !== null);
-  console.log('validTags:', validTags);
-  if (validTags.length > 0) {
-    await newEntry.addTags(validTags);
-  }
-}
+    // tag logic
+    if (Array.isArray(tags) && tags.length > 0) {
+      const tagLookups = tags.map((tagName) =>
+        db.tag.findOne({ where: { name: tagName } })
+      );
+      const foundTags = await Promise.all(tagLookups);
+      console.log("foundTags:", foundTags);
+      const validTags = foundTags.filter((tag) => tag !== null);
+      console.log("validTags:", validTags);
+      if (validTags.length > 0) {
+        await newEntry.addTags(validTags);
+      }
+    }
 
-
-     res.redirect("/entries");
+    res.redirect("/entries");
   } catch (err) {
     console.log(err);
     res.render("error");
   }
 });
-
 
 // GET /entries/:id -- SHOW route to display a single entry
 router.get("/:id", async (req, res) => {
@@ -171,14 +169,16 @@ router.get("/:id", async (req, res) => {
         userId: res.locals.user.id,
         id: req.params.id,
       },
-      include: [{
-        model: db.tag,
-        as: 'tags',
-        attributes: ['name'],
-        through: {
-          attributes: []
-        }
-      }]
+      include: [
+        {
+          model: db.tag,
+          as: "tags",
+          attributes: ["name"],
+          through: {
+            attributes: [],
+          },
+        },
+      ],
     });
     if (!foundEntry.length) {
       // Entry not found redirect to index
@@ -206,15 +206,15 @@ router.get("/:id/edit", async (req, res) => {
         id: req.params.id,
       },
     });
-    
+
     const adjectives = await db.entry_tag.findAll({
       where: {
         entryId: req.params.id,
-    }
-  });
+      },
+    });
 
     // Render the edit form with the entry data
-    console.log(adjectives)
+    console.log(adjectives);
     res.render("entries/edit-entry", { entry: foundEntry[0], adjectives });
   } catch (err) {
     console.error(err);
@@ -236,24 +236,24 @@ router.put("/:id", async (req, res) => {
 
     // Entry not found - redirect to index
     if (!foundEntry) {
-      res.redirect('/entries?message=Entry not found')
+      res.redirect("/entries?message=Entry not found");
     }
 
     // Grouping all Content together for JSONB
-    const {content1, content2, content3, content4, content5} = req.body
+    const { content1, content2, content3, content4, content5 } = req.body;
     const updatedContent = {
       content1,
       content2,
       content3,
       content4,
-      content5
-    }
+      content5,
+    };
 
     // Update the entry with the new data
     await db.entry.update(
       { content: updatedContent },
-      { where: {id: foundEntry.id }}
-      );
+      { where: { id: foundEntry.id } }
+    );
 
     // Redirect the user to the updated entry's detail page
     res.redirect("/entries");
@@ -262,7 +262,6 @@ router.put("/:id", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
 
 // DELETE /entries/:id -- DELETE route to delete an entry
 router.delete("/:id", async (req, res) => {
@@ -290,11 +289,12 @@ router.delete("/:id", async (req, res) => {
 // GET /entries/search
 
 router.get("/search", async (req, res) => {
-  try {res.send("hello search")
+  try {
+    res.send("hello search");
   } catch (err) {
     console.log(err);
   }
-  
+
   const user = res.locals.user;
   res.render("entries/search.ejs");
 });

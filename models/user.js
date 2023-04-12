@@ -21,8 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     current_streak: DataTypes.INTEGER,
     longest_streak: DataTypes.INTEGER,
-    commitment: DataTypes.TEXT,
-    motivation: DataTypes.TEXT,
+    commitment: DataTypes.JSONB,
   }, {
     sequelize,
     modelName: 'user',

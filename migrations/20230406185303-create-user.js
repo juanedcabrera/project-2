@@ -28,10 +28,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       commitment: {
-        type: Sequelize.TEXT
-      },
-      motivation: {
-        type: Sequelize.TEXT
+        type: Sequelize.JSONB
       },
       createdAt: {
         allowNull: false,

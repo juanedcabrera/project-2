@@ -205,9 +205,6 @@ router.put("/profile", async (req, res) => {
       const commitment = { motivation, reward, deterrent, signature };
       console.log(commitment)
 
-      // Commitment set to true to make the fields read-only
-      user.commitment.submitted = true
-
       // Update commitment in db
       await db.user.update(
         { commitment },

@@ -50,3 +50,12 @@ check logic when your check profile or post
 check if post yesterday and today
 
 if last post is today - 1 increment streak by 1
+
+
+  <h4>Tags:</h4>
+  <% for (const adj of adjectives) { %>
+    <div>
+      <input type="checkbox" id="tag-<%= adj.toLowerCase() %>" name="tags" value="<%= adj.toLowerCase() %>" <% if (entry.tags.includes(adj.toLowerCase())) { %>checked<% } %>>
+      <label for="tag-<%= adj.toLowerCase() %>"><%= adj %></label>
+    </div>
+  <% } %>

@@ -157,9 +157,6 @@ router.get("/main", async (req, res) => {
     const currentStreak = dayDiff === 1 ? user.currentStreak + 1 : 0;
     const longestStreak = Math.max(user.longestStreak || 0, currentStreak);
     
-    console.log(`This is the LS or ${longestStreak}`)
-    console.log(`This is the USER LS or ${user.longestStreak}`)
-    console.log(`This is the USER ${user}`)
     await db.user.update ({current_streak:currentStreak, longest_streak:longestStreak}, {where: {id:user.id}})
 
     res.render("users/main.ejs", { user, currentStreak, longestStreak });

@@ -142,16 +142,19 @@ router.post("/", async (req, res) => {
     });
 
 // tag logic
-    if (Array.isArray(tags) && tags.length > 0) {
-      const tagLookups = tags.map(tagName => db.tag.findOne({ where: { name: tagName } }));
-      const foundTags = await Promise.all(tagLookups);
-      const validTags = foundTags.filter(tag => tag !== null);
-      if (validTags.length > 0) {
-        await newEntry.addTags(validTags);
-      }
-    }
+if (Array.isArray(tags) && tags.length > 0) {
+  const tagLookups = tags.map(tagName => db.tag.findOne({ where: { name: tagName } }));
+  const foundTags = await Promise.all(tagLookups);
+  console.log('foundTags:', foundTags);
+  const validTags = foundTags.filter(tag => tag !== null);
+  console.log('validTags:', validTags);
+  if (validTags.length > 0) {
+    await newEntry.addTags(validTags);
+  }
+}
 
-    await res.redirect("/entries");
+
+     res.redirect("/entries");
   } catch (err) {
     console.log(err);
     res.render("error");
@@ -203,9 +206,16 @@ router.get("/:id/edit", async (req, res) => {
         id: req.params.id,
       },
     });
+    
+    const adjectives = await db.entry_tag.findAll({
+      where: {
+        entryId: req.params.id,
+    }
+  });
 
     // Render the edit form with the entry data
-    res.render("entries/edit-entry", { entry: foundEntry[0] });
+    console.log(adjectives)
+    res.render("entries/edit-entry", { entry: foundEntry[0], adjectives });
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
@@ -223,12 +233,27 @@ router.put("/:id", async (req, res) => {
         id: req.params.id,
       },
     });
-    
+
+    // Entry not found - redirect to index
+    if (!foundEntry) {
+      res.redirect('/entries?message=Entry not found')
+    }
+
+    // Grouping all Content together for JSONB
+    const {content1, content2, content3, content4, content5} = req.body
+    const updatedContent = {
+      content1,
+      content2,
+      content3,
+      content4,
+      content5
+    }
+
     // Update the entry with the new data
-    await foundEntry.update({
-      title: req.body.title,
-      content: req.body.content
-    });
+    await db.entry.update(
+      { content: updatedContent },
+      { where: {id: foundEntry.id }}
+      );
 
     // Redirect the user to the updated entry's detail page
     res.redirect("/entries");

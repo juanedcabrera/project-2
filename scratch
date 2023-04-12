@@ -20,12 +20,12 @@ ___________
 [X] double check edit-entry.ejs
 [X] jsonb data for content 
 [X] Quotes showing
-[] Edit entries; would love to put 24 hour time limit for edits - Messed up when I changed entry
+[X] Edit entries; would love to put 24 hour time limit for edits - Messed up when I changed entry
 [X] Delete entries; would love to put 24 hour time limit for edits
 
 
 
-[] - Profile Page - Commitment - motivation (why you want to journal), reward (if I journal for 30 days, I will go see my fav movie), deterrent (if I don't journal for 30 days, I will give Andrew Smith $10)
+[X] - Profile Page - Commitment - motivation (why you want to journal), reward (if I journal for 30 days, I will go see my fav movie), deterrent (if I don't journal for 30 days, I will give Andrew Smith $10)
 [] - Profile Page - Profile Pic
 [X] - Profile Page - Password Reset
 [] - Profile Page - Settings Page = where users could define some rules on edit, delete, journal type, maybe color theme
@@ -33,29 +33,4 @@ ___________
 [] Navigation rewired
 [X] streaks - Applaud when they've done consecutive days "Way to go! This is your 3rd day of posting" or "We've missed you we haven't seen you in 20 days"
 [] points for logging in and points for posting
-[] calendar on main page
-
-current streak and longest streak the two columns to add
-check if post made yesterday and if you posted today when you post or check profile
--if no post yesterday than current streak shows as 0
--if posted than current streak is current streak
--if no post yesterday and you post today current steak is 1
-if user posts today - the post should increment current streak by 1
-
-
-if current is bigger than the longest you update that to be the current
-
-
-check logic when your check profile or post
-check if post yesterday and today
-
-if last post is today - 1 increment streak by 1
-
-
-  <h4>Tags:</h4>
-  <% for (const adj of adjectives) { %>
-    <div>
-      <input type="checkbox" id="tag-<%= adj.toLowerCase() %>" name="tags" value="<%= adj.toLowerCase() %>" <% if (entry.tags.includes(adj.toLowerCase())) { %>checked<% } %>>
-      <label for="tag-<%= adj.toLowerCase() %>"><%= adj %></label>
-    </div>
-  <% } %>
+[] calendar on main page - this is tough

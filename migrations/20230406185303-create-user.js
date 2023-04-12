@@ -30,6 +30,9 @@ module.exports = {
       commitment: {
         type: Sequelize.JSONB
       },
+      img: {
+        type: Sequelize.TEXT
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

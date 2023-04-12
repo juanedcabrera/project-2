@@ -6,7 +6,16 @@
   <p><%= message %></p>
 <% } %>
 
-<h1>Reset Password</h1>
+<img src="<%= user.img %>" width="400" height="300"/>
+
+<form method="POST" action="/users/profile?_method=PUT" class="entryForm">
+  <label class="uploadSpacerTop">Choose profile pic picture</label>
+  <input type="hidden" role="uploadcare-uploader" data-public-key="fa1bbb7a33229765419d" name="my_file">
+  <button type="submit" class="entryButton">Submit</button>
+</form>
+
+<div>
+<h3>Reset Password</h3>
 <form method="POST" action="/users/profile?_method=PUT">
   <div>
     <label for="new-password">New Password:</label>
@@ -14,8 +23,9 @@
   </div>
   <button type="submit">Reset Password</button>
 </form>
-
-<form method="POST" action="/users/profile?_method=PUT">
+</div>
+<div>
+<form method="POST" action="/users/profile?_method=PUT" onsubmit="submitForm(event)">
   <div>
     <label for="motivation">Motivation - Why do you want to journal?</label>
     <input name="motivation" id="motivation" required>
@@ -26,15 +36,16 @@
   </div>
   <div>
     <label for="deterrent">Deterrent - What will you give up if you fail to meet that goal?</label>
-    <input name="deterrent" id="deterrent" required>
+    <input name="deterrent" id="deterrent"  required>
   </div>
   <div>
     <label for="signature">Signature</label>
     <input name="signature" id="signature" required>
   </div>
 
-  <button type="submit">Submit</button>
+  <button id="submit-btn" type="submit">Submit</button>
 </form>
+</div>
 
 
 <%- include('../partials/footer.ejs') %>

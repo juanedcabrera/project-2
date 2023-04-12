@@ -4,6 +4,8 @@ const router = express.Router();
 const db = require("../models");
 const bcrypt = require("bcrypt");
 const cryptoJs = require("crypto-js");
+const uploadcareWidget = require("uploadcare-widget")
+
 
 // GET /users/new -- show route for a form that creates a new user (sign up for the app)
 router.get("/new", (req, res) => {
@@ -180,7 +182,7 @@ router.get("/main", async (req, res) => {
 // PUT route to update the user's password and commitment
 router.put("/profile", async (req, res) => {
   try {
-    const { newPassword, motivation, reward, deterrent, signature } = req.body;
+    const { newPassword, motivation, reward, deterrent, signature, my_file } = req.body;
     const { user } = res.locals;
 
     let message;
@@ -202,14 +204,26 @@ router.put("/profile", async (req, res) => {
       // Combine commitment parts into JSON object
       const commitment = { motivation, reward, deterrent, signature };
       console.log(commitment)
+
+      // Commitment set to true to make the fields read-only
+      user.commitment.submitted = true
+
       // Update commitment in db
       await db.user.update(
         { commitment },
-        { where: { id: user.id } }
+        { where: { id: user.id } },
       );
 
       message = "Commitment updated 🥳";
     }
+      
+    if (my_file) {
+      await db.user.update(
+        {img: req.body.my_file},
+        { where: { id: user.id } },
+        )
+      }
+      message = "Profile Pic Updated 🎉"
 
     res.redirect(`/users/profile?message=${message}`);
   } catch (err) {

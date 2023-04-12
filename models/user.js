@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     current_streak: DataTypes.INTEGER,
     longest_streak: DataTypes.INTEGER,
     commitment: DataTypes.JSONB,
+    img: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'user',

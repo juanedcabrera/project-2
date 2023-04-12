@@ -5,7 +5,6 @@ const db = require("../models");
 const bcrypt = require("bcrypt");
 const cryptoJs = require("crypto-js");
 
-
 // GET /users/new -- show route for a form that creates a new user (sign up for the app)
 router.get("/new", (req, res) => {
   if (res.locals.user) {
@@ -38,6 +37,13 @@ router.post('/', async (req, res) => {
       const [newUser, created] = await db.user.findOrCreate({
           where: {
               email: req.body.email
+          },
+          defaults: {
+              first_name: req.body.first_name,
+              last_name: req.body.last_name,
+              current_streak: 0,
+              longest_streak: 0,
+              password: bcrypt.hashSync(req.body.password, 12)
           }
       })
       if (!created) {
@@ -46,23 +52,19 @@ router.post('/', async (req, res) => {
           // instead redirect them to the log in page
           res.redirect('/users/login?message=Please login to your account to continue 🙈')
       } else {
-          // hash the users's password before we add it to the db
-          const hashedPassed = bcrypt.hashSync(req.body.password, 12)
-          // save the user in the db
-          newUser.password = hashedPassed
-          await newUser.save()
           // encypt the logged in user's id
           const encryptedPk = cryptoJs.AES.encrypt(newUser.id.toString(), process.env.ENC_KEY)
           // set encrypted id as a cookie
           res.cookie('userId', encryptedPk.toString())
           // redirect user 
-          res.redirect('/users/profile')
+          res.redirect('/users/main')
       }
   } catch (error) {
       console.log(error)
       res.redirect('/')
   }
 })
+
 
 // POST /users/login -- authenticate a user's credentials
 router.post("/login", async (req, res) => {
@@ -153,8 +155,11 @@ router.get("/main", async (req, res) => {
     const timeDiff = currentDate.getTime() - lastPostDate.getTime();
     const dayDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
     const currentStreak = dayDiff === 1 ? user.currentStreak + 1 : 0;
-    const longestStreak = Math.max(user.longestStreak, currentStreak);
+    const longestStreak = Math.max(user.longestStreak || 0, currentStreak);
     
+    console.log(`This is the LS or ${longestStreak}`)
+    console.log(`This is the USER LS or ${user.longestStreak}`)
+    console.log(`This is the USER ${user}`)
     await db.user.update ({current_streak:currentStreak, longest_streak:longestStreak}, {where: {id:user.id}})
 
     res.render("users/main.ejs", { user, currentStreak, longestStreak });
@@ -185,6 +190,8 @@ router.put("/profile", async (req, res) => {
     res.status(500).send('Internal Server Error')
   }
   })
+
+
 
 
 // export the router instance

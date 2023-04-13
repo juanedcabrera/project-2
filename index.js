@@ -7,6 +7,7 @@ const db = require('./models')
 const methodOverride = require('method-override');
 
 
+
 // app config
 const app = express()
 const PORT = process.env.PORT || 8000
@@ -57,9 +58,9 @@ app.use(async (req, res, next) => {
   // routes and controllers
 app.get('/', (req, res) => {
     if (res.locals.user) {
-        res.render("home.ejs")
+        res.render("home-signed-in.ejs")
     } else {
-       res.render('index-not-signed-in.ejs')
+       res.render('home.ejs')
     }
 })
 

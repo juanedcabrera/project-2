@@ -7,6 +7,7 @@ const cryptoJs = require("crypto-js");
 const uploadcareWidget = require("uploadcare-widget")
 
 
+
 // GET /users/new -- show route for a form that creates a new user (sign up for the app)
 router.get("/new", (req, res) => {
   if (res.locals.user) {
@@ -150,6 +151,7 @@ router.get("/main", async (req, res) => {
     });
 
     if (!lastPost) {
+      message = "Welcome Main 🎉"
       // User has never posted before
       res.render("users/main.ejs", {
         user,
@@ -171,7 +173,7 @@ router.get("/main", async (req, res) => {
       { current_streak: currentStreak, longest_streak: longestStreak },
       { where: { id: user.id } }
     );
-
+    message = "Welcome to main🎉"
     res.render("users/main.ejs", { user, currentStreak, longestStreak });
   } catch (err) {
     console.log(err);

@@ -1,21 +1,29 @@
 <%- include("../partials/header.ejs") %>
 
-<h2>Sign up for an account!</h2>
-
-<form method="POST" action="/users">
-    <label for="first_name">First Name:</label>
-    <input type="first_name" name="first_name" id="first_name" required/>
-
-    <label for="last_name">Last Name:</label>
-    <input type="last_name" name="last_name" id="last_name" required/>
-
-    <label for="email">Email:</label>
-    <input type="email" name="email" id="email" required/>
-
-    <label for="password">Password:</label>
-    <input type="password" name="password" id="password" required />
-
-    <button type="submit">Sign Up!</button>
-</form>
+<h2 class="centered">Sign up for an account!</h2>
+<div class="centered">
+    _____________________________________________________________________
+    
+ 
+    <div style="text-align: center">
+    <form method="POST" action="/users">
+      <div style="margin:20px">
+        <label for="first_name">first Name:</label>
+        <input type="first_name" name="first_name" id="first_name" required/>
+  
+        <label for="last_name">last Name:</label>
+        <input type="last_name" name="last_name" id="last_name" required/>
+      </div>
+      <div>
+        <label for="email">email:</label>
+        <input type="email" name="email" id="email" required/>
+  
+        <label for="password">password:</label>
+        <input type="password" name="password" id="password" required />
+      </div>
+      <button type="submit" style="margin:20px">sign up!</button>
+    </form>
+  </div>
+  
 
 <%- include('../partials/footer.ejs') %>

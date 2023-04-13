@@ -1,3 +1,25 @@
-body {
-    background-color: gray;
+* {
+    background-color: rgb(247, 248, 249);
+    font-family: 'Roboto Mono', monospace;
+
 }
+
+h1 {
+    font-size: 60px;
+}
+
+
+h4 {
+    margin: 10px;
+}
+
+.centered {
+    text-align: center;
+    margin:10px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between; /* aligns the columns at the start and end of the row */
+    align-items: center; /* centers the content of the columns vertically */
+  }

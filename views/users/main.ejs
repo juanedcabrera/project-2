@@ -1,10 +1,15 @@
 <%- include("../partials/header.ejs") %>
 
-<h1>Welcome to you main</h1>
+<h2 class="centered">Welcome <%=user.first_name%></h2>
+ 
+<div class="centered">
+<% if (message) { %>
+    <p><%= message %></p>
+  <% } %>
+</div>
 
-<p>I hope you enjoy using our app!</p>
-
-<h2>Current streak: <%= currentStreak %></h2>
-<h2>Longest streak: <%= longestStreak %></h2>
-
+<div class="centered">
+<h4>Current streak: <%= currentStreak %></h4>
+<h4>Longest streak: <%= longestStreak %></h4>
+</div>
 <%- include("../partials/footer.ejs") %>

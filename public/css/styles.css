@@ -1,7 +1,7 @@
 * {
     background-color: rgb(247, 248, 249);
     font-family: 'Roboto Mono', monospace;
-
+    margin:0;
 }
 
 h1 {
@@ -23,3 +23,6 @@ h4 {
     justify-content: space-between; /* aligns the columns at the start and end of the row */
     align-items: center; /* centers the content of the columns vertically */
   }
+
+
+  

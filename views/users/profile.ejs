@@ -1,41 +1,51 @@
 <%- include("../partials/header.ejs") %>
 
-<h2>Welcome to your profile page</h2>
+<h2 class="centered">Welcome to your profile page</h2>
 
 <% if (message) { %>
   <p><%= message %></p>
 <% } %>
 
+<div class="centered">
 <img src="<%= user.img %>" width="400" height="300"/>
+</div>
 
+<div class="centered">
 <form method="POST" action="/users/profile?_method=PUT" class="entryForm">
   <label class="uploadSpacerTop">Choose profile pic picture</label>
   <input type="hidden" role="uploadcare-uploader" data-public-key="fa1bbb7a33229765419d" name="my_file">
   <button type="submit" class="entryButton">Submit</button>
 </form>
+</div>
 
-<div>
+<div class="centered">
 <h3>Reset Password</h3>
 <form method="POST" action="/users/profile?_method=PUT">
   <div>
-    <label for="new-password">New Password:</label>
+    <label for="new-password">New Password:</label>  </div><div>
     <input type="password" name="newPassword" id="new-password" required>
-  </div>
+
   <button type="submit">Reset Password</button>
 </form>
 </div>
-<div>
+
+<div class="centered">
   <form method="POST" action="/users/profile?_method=PUT" onsubmit="submitForm(event)">
     <div>
       <label for="motivation">Motivation - Why do you want to journal?</label>
+      </div>
+      <div>
       <input name="motivation" id="motivation" value="<%= user.commitment ? user.commitment.motivation : '' %>" <%= user.commitment ? 'readonly' : '' %> required>
     </div>
     <div>
       <label for="reward">Reward - What will you give yourself if you meet a journaling goal?</label>
+      </div>
+      <div>
       <input name="reward" id="reward" value="<%= user.commitment ? user.commitment.reward : '' %>" <%= user.commitment ? 'readonly' : '' %>  required>
     </div>
     <div>
       <label for="deterrent">Deterrent - What will you give up if you fail to meet that goal?</label>
+      </div><div>
       <input name="deterrent" id="deterrent" value="<%= user.commitment ? user.commitment.deterrent : '' %>" <%= user.commitment ? 'readonly' : '' %>  required>
     </div>
     <div>

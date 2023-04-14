@@ -61,3 +61,23 @@ I will be using https://api.themotivate365.com/stoic-quote to retrieve stoicism 
 
 ## 🛣️ RESTful Routing Chart
 ![Routes](ResfulRouting.drawio.png)#
+
+## Installation Instructions
+- Clone the repository:
+git clone https://github.com/juanedcabrera/thoughtful.day.git
+
+- Navigate to the project directory:
+cd to the repository
+
+- Install the required dependencies:
+npm i cookie-parser crypto-js method-override nodemon
+
+- Create a .env file at the root of the project and fill in the necessary environment variables:
+PORT=8000
+ENC_KEY=key
+(For key you should put whichever key string you want to use in VARCHAR format)
+
+- Start the server
+Go to directory and hit nodemon
+
+- Open the browser and go to http://localhost:8000

@@ -117,9 +117,9 @@ router.post("/", async (req, res) => {
         db.tag.findOne({ where: { name: tagName } })
       );
       const foundTags = await Promise.all(tagLookups);
-      console.log("foundTags:", foundTags);
+      // console.log("foundTags:", foundTags);
       const validTags = foundTags.filter((tag) => tag !== null);
-      console.log("validTags:", validTags);
+      // console.log("validTags:", validTags);
       if (validTags.length > 0) {
         await newEntry.addTags(validTags);
       }
@@ -186,7 +186,7 @@ router.get("/:id/edit", async (req, res) => {
     });
 
     // Render the edit form with the entry data
-    console.log(adjectives);
+    // console.log(adjectives);
     res.render("entries/edit-entry", { entry: foundEntry[0], adjectives });
   } catch (err) {
     console.error(err);

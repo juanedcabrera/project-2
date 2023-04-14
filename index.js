@@ -22,8 +22,8 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use((req, res, next) => {
     // incoming request console logger
-    console.log(`[${new Date().toLocaleString()}]: ${req.method} ${req.url}`)
-    console.log('request body:', req.body)
+    // console.log(`[${new Date().toLocaleString()}]: ${req.method} ${req.url}`)
+    // console.log('request body:', req.body)
     // send data downstream to the other routes
     // res.locals.myData = 'hi 👋'
     next() // tells express that this middleware has finished

@@ -4,9 +4,7 @@ const router = express.Router();
 const db = require("../models");
 const bcrypt = require("bcrypt");
 const cryptoJs = require("crypto-js");
-const uploadcareWidget = require("uploadcare-widget")
-
-
+const uploadcareWidget = require("uploadcare-widget");
 
 // GET /users/new -- show route for a form that creates a new user (sign up for the app)
 router.get("/new", (req, res) => {
@@ -35,7 +33,7 @@ router.get("/profile", (req, res) => {
 // POST /users -- CREATE a new user from the form @ GET /users/new
 router.post("/", async (req, res) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
     // do a find or create with the user's given email
     const [newUser, created] = await db.user.findOrCreate({
       where: {
@@ -51,7 +49,7 @@ router.post("/", async (req, res) => {
     });
     if (!created) {
       // if the user's returns as found -- don't let them sign up
-      console.log("user account exists");
+      // console.log("user account exists");
       // instead redirect them to the log in page
       res.redirect(
         "/users/login?message=Please login to your account to continue 🙈"
@@ -128,13 +126,18 @@ router.get("/main", async (req, res) => {
       );
       return;
     }
-
+    
     // decrypt the user ID and find the user in the database
-    const userId = parseInt(
-      cryptoJs.AES.decrypt(encryptedPk, process.env.ENC_KEY).toString(
-        cryptoJs.enc.Utf8
-      )
-    );
+    const decryptedPk = cryptoJs.AES.decrypt(encryptedPk, process.env.ENC_KEY);
+    const userId = parseInt(decryptedPk.toString(cryptoJs.enc.Utf8));
+    if (!userId) {
+      // if the decrypted user ID is not present, redirect to the login page
+      res.redirect(
+        "/users/login?message=You are not authorized to view that page. Please authenticate to continue 😎"
+      );
+      return;
+    }
+    
     const user = await db.user.findByPk(userId);
     if (!user) {
       // if the user is not found in the database, redirect to the login page
@@ -143,6 +146,7 @@ router.get("/main", async (req, res) => {
       );
       return;
     }
+    
 
     // Get the user's most recent post
     const lastPost = await db.entry.findOne({
@@ -151,7 +155,7 @@ router.get("/main", async (req, res) => {
     });
 
     if (!lastPost) {
-      message = "Welcome Main 🎉"
+      message = "Welcome Main 🎉";
       // User has never posted before
       res.render("users/main.ejs", {
         user,
@@ -173,7 +177,7 @@ router.get("/main", async (req, res) => {
       { current_streak: currentStreak, longest_streak: longestStreak },
       { where: { id: user.id } }
     );
-    message = "Let's work on that streak 📈"
+    message = "Let's work on that streak 📈";
     res.render("users/main.ejs", { user, currentStreak, longestStreak });
   } catch (err) {
     console.log(err);
@@ -184,7 +188,8 @@ router.get("/main", async (req, res) => {
 // PUT route to update the user's password and commitment
 router.put("/profile", async (req, res) => {
   try {
-    const { newPassword, motivation, reward, deterrent, signature, my_file } = req.body;
+    const { newPassword, motivation, reward, deterrent, signature, my_file } =
+      req.body;
     const { user } = res.locals;
 
     let message;
@@ -205,24 +210,21 @@ router.put("/profile", async (req, res) => {
     if (motivation || reward || deterrent || signature) {
       // Combine commitment parts into JSON object
       const commitment = { motivation, reward, deterrent, signature };
-      console.log(commitment)
+      // console.log(commitment)
 
       // Update commitment in db
-      await db.user.update(
-        { commitment },
-        { where: { id: user.id } },
-      );
+      await db.user.update({ commitment }, { where: { id: user.id } });
 
       message = "Commitment updated 🥳";
     }
-      
+
     if (my_file) {
       await db.user.update(
-        {img: req.body.my_file},
-        { where: { id: user.id } },
-        )
-      }
-      message = "Profile Pic Updated 🎉"
+        { img: req.body.my_file },
+        { where: { id: user.id } }
+      );
+    }
+    message = "Profile Pic Updated 🎉";
 
     res.redirect(`/users/profile?message=${message}`);
   } catch (err) {
@@ -230,7 +232,6 @@ router.put("/profile", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
 
 // export the router instance
 module.exports = router;

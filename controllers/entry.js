@@ -4,37 +4,7 @@ const db = require("../models");
 const cryptoJs = require("crypto-js");
 const methodOverride = require("method-override");
 const { Op, Sequelize } = require("sequelize");
-const adjectives = [
-  "Accomplishment",
-  "Adventure",
-  "Comfort",
-  "Contentment",
-  "Creativity",
-  "Empowered",
-  "Excitement",
-  "Family",
-  "Friendship",
-  "Gracious",
-  "Grateful",
-  "Growth",
-  "Health",
-  "Hopeful",
-  "Inspired",
-  "Joyful",
-  "Learning",
-  "Love",
-  "Mindfulness",
-  "Nature",
-  "Nostalgic",
-  "Overwhelmed",
-  "Peaceful",
-  "Positivity",
-  "Reflection",
-  "Relationships",
-  "Sadded",
-  "Spiritual",
-  "Success",
-];
+
 
 // GET /entries -- INDEX route to show all the entries
 router.get("/", async (req, res) => {
@@ -98,6 +68,8 @@ router.get("/new", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
+
+  const adjectives = await db.tag.findAll()
 
   const user = res.locals.user;
   res.render("entries/new.ejs", {

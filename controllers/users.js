@@ -173,7 +173,7 @@ router.get("/main", async (req, res) => {
       { current_streak: currentStreak, longest_streak: longestStreak },
       { where: { id: user.id } }
     );
-    message = "Welcome to main🎉"
+    message = "Let's work on that streak 📈"
     res.render("users/main.ejs", { user, currentStreak, longestStreak });
   } catch (err) {
     console.log(err);

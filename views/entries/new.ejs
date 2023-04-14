@@ -1,39 +1,63 @@
 <%- include("../partials/header.ejs") %>
 
-<h2>Entries - New</h2>
+<div class="centered">
+<figure>
+  <blockquote class="blockquote">
+    <p><%= quotes.quote %></p>
+  </blockquote>
+  <figcaption class="blockquote-footer">
+    <p><%= quotes.author %></p>
+  </figcaption>
+</figure>
+</div>
 
-<p><%= quotes.quote %></p>
-<p><%= quotes.author %></p>
+
+
 
 <form method="POST" action="/entries">
+  <div class="centered">
   <h1>☀️</h1>
-    <h2>I am grateful for:</h2>
-    <label for="content">Content1:</label>
-    <input type="text" id="content1" name="content1" required>
-    <h2>What would make today great?</h2>
-    <label for="content">Content2:</label>
-    <input type="text" id="content2" name="content2" required>
-    <h2>Positive Affirmation</h2>
-    <label for="content">Content3:</label>
-    <input type="text" id="content3" name="content3" required>
-    <h1>☾</h1>
-    <h2>Good things that happened today:</h2>
-    <label for="content">Content4:</label>
-    <input type="text" id="content4" name="content4" required>
-    <h2>What I learned today:</h2>
-    <label for="content">Content5:</label>
-    <input type="text" id="content5" name="content5" required>
-  
+  <div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">I am grateful for:</label>
+    <textarea class="form-control" type="text" id="content1" rows="3" name="content1" required></textarea>
+  </div>
+  <div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">What would make today great?</label>
+    <textarea class="form-control" type="text" id="content2" rows="3" name="content2" required></textarea>
+  </div>
+  <div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">Positive Affirmation</label>
+    <textarea class="form-control" type="text" id="content3" rows="3" name="content3" required></textarea>
+  </div>
+  <h1>☾</h1>
+  <div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">Good things that happened today:</label>
+    <textarea class="form-control" type="text" id="content4" rows="3" name="content4" required></textarea>
+  </div>
+  <div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">What I learned today:</label>
+    <textarea class="form-control" type="text" id="content5" rows="3" name="content5" required></textarea>
+  </div>
     <h4>Tags:</h4>
+  </div>
+
+    <div class="container">
+    <div class="row justify-content-left">
     <% for (const adj of adjectives) { %>
-      <div>
-        <input type="checkbox" id="tag-<%= adj.toLowerCase() %>" name="tags" value="<%= adj.toLowerCase() %>">
-        <label for="tag-<%= adj.toLowerCase() %>"><%= adj %></label>
+      <div class="col-md-3">
+        <input type="checkbox" id="tag-<%= adj.name.toLowerCase() %>" name="tags" value="<%= adj.name.toLowerCase() %>">
+        <label for="tag-<%= adj.name.toLowerCase() %>"><%= adj.name %></label>
       </div>
     <% } %>
-    
-  
-    <button type="submit">Save Entry</button>
+    </div>
+  </div>
+</br>
+<div class="centered">
+  <button type="submit">Save Entry</button>
+  <div class="mb-5"
+  </div>
+</div>
   </form>
+
 
 <%- include('../partials/footer.ejs') %>

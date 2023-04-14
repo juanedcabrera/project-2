@@ -29,7 +29,7 @@ module.exports = {
       { name: 'positivity', "createdAt": new Date(), "updatedAt": new Date() },
       { name: 'reflection', "createdAt": new Date(), "updatedAt": new Date() },
       { name: 'relationships', "createdAt": new Date(), "updatedAt": new Date() },
-      { name: 'sadded', "createdAt": new Date(), "updatedAt": new Date() },
+      { name: 'saddened', "createdAt": new Date(), "updatedAt": new Date() },
       { name: 'spiritual', "createdAt": new Date(), "updatedAt": new Date() },
       { name: 'success', "createdAt": new Date(), "updatedAt": new Date() },
     ]);

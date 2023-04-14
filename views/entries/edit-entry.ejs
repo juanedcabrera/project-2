@@ -1,7 +1,12 @@
 <%- include("../partials/header.ejs") %>
 
-<h1>Edit Entry</h1>
+<div class="centered">
+  <% if (message) { %>
+      <p><%= message %></p>
+    <% } %>
+  </div>
 
+<h1>Edit Entry</h1>
 
 <form method="POST" action="/entries/<%= entry.id %>?_method=PUT">
   <h1>☀️</h1>

@@ -166,8 +166,8 @@ router.get("/main", async (req, res) => {
     const lastPostDate = new Date(lastPost.createdAt);
     const timeDiff = currentDate.getTime() - lastPostDate.getTime();
     const dayDiff = Math.floor(timeDiff / (1000 * 3600 * 24));
-    const currentStreak = dayDiff === 1 ? user.currentStreak + 1 : 0;
-    const longestStreak = Math.max(user.longestStreak || 0, currentStreak);
+    const currentStreak = dayDiff === 1 ? user.current_streak + 1 : 0;
+    const longestStreak = Math.max(user.longest_streak || 0, currentStreak);
 
     await db.user.update(
       { current_streak: currentStreak, longest_streak: longestStreak },

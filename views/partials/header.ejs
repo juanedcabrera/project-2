@@ -37,9 +37,6 @@
         </ul>
         <ul class="nav nav-pills flex-row">
         <li class="nav-item">
-          <h4><a class="text-dark" href="/users/profile">Profile</a></h4>
-        </li>
-        <li class="nav-item">
           <h4><a class="text-dark" href="/entries/">Entries</a></h4>
         </li>
         <li class="nav-item">
@@ -47,7 +44,12 @@
         </li>
       </ul>
       <ul class="nav nav-pills flex-row justify-content-between">
-        <img class="rounded-circle shadow-4-strong" alt="avatar2" height="40px" width="40px" src="<%= user.img %>" />
+        <li class="nav-item">
+          <a href="/users/profile">
+            <img class="rounded-circle shadow-4-strong" alt="avatar2" height="40px" width="40px" src="<%= user.img %>" />
+          </a>
+        </li>
+        
         <li class="nav-item">
           <h4><a class="text-dark" href="/users/logout">Logout</a></h4>
         </li>

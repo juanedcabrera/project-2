@@ -74,7 +74,6 @@ router.post("/", async (req, res) => {
 // POST /users/login -- authenticate a user's credentials
 router.post("/login", async (req, res) => {
   try {
-    console.log(req.body);
     // search for the user's email in the db
     const foundUser = await db.user.findOne({
       where: {

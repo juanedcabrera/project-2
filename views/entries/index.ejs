@@ -18,8 +18,9 @@
   <button type="submit">Search</button>
 </form>
 
-<ul>
-  <% entries.forEach((entry) => {
+<div class="card-deck">
+  <% let cardCounter = 0 %>
+  <% for (const entry of entries) {
     const createdAt = new Date(entry.createdAt);
     const options = {
       weekday: 'long',
@@ -29,10 +30,20 @@
     const dateString = createdAt.toLocaleDateString('en-US', options);
     const hour = createdAt.getHours();
     const greeting = hour < 12 ? 'Morning' : 'Evening';
+    cardCounter++;
   %>
-    <li><a href="/entries/<%= entry.id %>"><%= dateString %> <%= greeting %> Post</a></li>
-  <% }); %>
-</ul>
+    <div class="card mb-4">
+      <div class="card-header"><a href="/entries/<%= entry.id %>"><%= dateString %> <%= greeting %></a></div>
+      <div class="card-body">
+        <p class="card-text"><%= entry.content.content1 %></p>
+      </div>
+    </div>
+    <% if (cardCounter % 3 === 0) { %>
+      </div><div class="card-deck">
+    <% } %>
+  <% } %>
+</div>
+
 
 
 <%- include("../partials/footer.ejs") %>

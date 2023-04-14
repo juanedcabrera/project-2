@@ -1,5 +1,7 @@
 # Thoughtful.day
 
+## Live Site: https://www.thoughtful.day/
+
 ## TL;DR:
 Thoughtful.day will be a journaling platform where users will be able to use different types of journaling templates.
 
@@ -81,3 +83,19 @@ ENC_KEY=key
 Go to directory and hit nodemon
 
 - Open the browser and go to http://localhost:8000
+
+## Approach Taken
+
+The aim of this journal project was to create a platform where users can journal, choose different journals, and have guided prompts. To achieve this goal, we adopted an iterative and user-centered design approach, which involved several key steps.
+
+Firstly, I conducted research to gain a deeper understanding of our target users and their needs. This involved conducting user interviews, surveys, and analyzing existing journals and mental health apps. Based on our findings, I developed user personas and defined our design goals and requirements.
+
+Next, I created wireframes and prototypes of the journal platform, which I tested with potential users to gather feedback and refine our designs. I also conducted usability testing to ensure that the platform was easy to use and understand.
+
+Once I had finalized the design, I developed the platform using modern technologies, including HTML, CSS, JavaScript, Express and Node.js. I also implemented user authentication and database integration to ensure that users could securely and easily save and access their journal entries.
+
+Finally, I launched the platform and gathered feedback from early users to continue improving the design and functionality. Throughout the project, I focused on creating a user-centered and accessible platform that empoIrs users to take control of their emotional wellbeing.
+
+## Project Reflection
+
+I think this was a very challenging project that involved front and back end technologies that were tough to wrap my head around. I think the biggest piece is the realization that writing code more and more, whether I fully understood it or not, helped me learn intensely. It was a week of full breakthroughs with Express and node as well Sequelize and deployment. 

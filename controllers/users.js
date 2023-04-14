@@ -126,18 +126,13 @@ router.get("/main", async (req, res) => {
       );
       return;
     }
-    
+
     // decrypt the user ID and find the user in the database
-    const decryptedPk = cryptoJs.AES.decrypt(encryptedPk, process.env.ENC_KEY);
-    const userId = parseInt(decryptedPk.toString(cryptoJs.enc.Utf8));
-    if (!userId) {
-      // if the decrypted user ID is not present, redirect to the login page
-      res.redirect(
-        "/users/login?message=You are not authorized to view that page. Please authenticate to continue 😎"
-      );
-      return;
-    }
-    
+    const userId = parseInt(
+      cryptoJs.AES.decrypt(encryptedPk, process.env.ENC_KEY).toString(
+        cryptoJs.enc.Utf8
+      )
+    );
     const user = await db.user.findByPk(userId);
     if (!user) {
       // if the user is not found in the database, redirect to the login page
@@ -146,7 +141,6 @@ router.get("/main", async (req, res) => {
       );
       return;
     }
-    
 
     // Get the user's most recent post
     const lastPost = await db.entry.findOne({

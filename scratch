@@ -26,21 +26,21 @@ ___________
 
 
 [X] - Profile Page - Commitment - motivation (why you want to journal), reward (if I journal for 30 days, I will go see my fav movie), deterrent (if I don't journal for 30 days, I will give Andrew Smith $10)
-[] - Profile Page - Profile Pic
+[X] - Profile Page - Profile Pic
 [X] - Profile Page - Password Reset
 [] - Profile Page - Settings Page = where users could define some rules on edit, delete, journal type, maybe color theme
 [X] create a landing page for when you login
-[] Navigation rewired
+[X] Navigation rewired
 [X] streaks - Applaud when they've done consecutive days "Way to go! This is your 3rd day of posting" or "We've missed you we haven't seen you in 20 days"
 [] points for logging in and points for posting
 [] calendar on main page - this is tough
 [] add a night time entry field asking "Summarize today in one word"
-[] entry log should change to "Wednesday, April 12 - word"
-[] in profile page - put the commitment into two containers or columns and flexbox innder container maxwidth
-[] make show entry look like the actual entry page without the tags
-[] make tags go into 3 or 4 columns
-[] for the entry make it 2 columns - entry prompt on one side and response on other.
-[] quote should be centered
-[] Take out content1,2,3,4,5 
-[] add logo
+[X] entry log should change to "Wednesday, April 12 - word"
+[X] in profile page - put the commitment into two containers or columns and flexbox innder container maxwidth
+[X] make show entry look like the actual entry page without the tags
+[X] make tags go into 3 or 4 columns
+[X] for the entry make it 2 columns - entry prompt on one side and response on other.
+[X] quote should be centered
+[X] Take out content1,2,3,4,5 
+[X] add logo
 [] gamification section - typo and grammar

@@ -46,7 +46,7 @@
       <ul class="nav nav-pills flex-row justify-content-between">
         <li class="nav-item">
           <a href="/users/profile">
-            <img class="rounded-circle shadow-4-strong" alt="avatar2" height="40px" width="40px" src="<%= user.img %>" />
+            <img class="rounded-circle shadow-4-strong" alt="avatar2" height="40px" width="40px" src="<%= user.img ? user.img : "/images/default.png" %>" />
           </a>
         </li>
         

@@ -1,7 +1,5 @@
 <%- include("../partials/header.ejs") %>
 
-<h2 class="centered">Welcome to your profile page</h2>
-
 <div class="centered"
 <% if (message) { %>
   <p><%= message %></p>
@@ -9,54 +7,51 @@
 </div>
 
 <div class="centered">
-<img src="<%= user.img %>" width="400" height="300"/>
+<img src="<%= user.img ? user.img : "/images/default.png" %>" width="350" height="300"/>
 </div>
 
 <div class="centered">
 <form method="POST" action="/users/profile?_method=PUT" class="entryForm">
-  <label class="uploadSpacerTop">Choose profile pic picture</label>
+  <label class="uploadSpacerTop">Profile Pic:</label>
   <input type="hidden" role="uploadcare-uploader" data-public-key="fa1bbb7a33229765419d" name="my_file">
   <button type="submit" class="entryButton">Submit</button>
 </form>
 </div>
 
+</br>
+</br>
 <div class="centered">
-<h3>Reset Password</h3>
-<form method="POST" action="/users/profile?_method=PUT">
-  <div>
-    <label for="new-password">New Password:</label>  </div><div>
-    <input type="password" name="newPassword" id="new-password" required>
-
-  <button type="submit">Reset Password</button>
-</form>
-</div>
-
-<div class="centered">
-  <form method="POST" action="/users/profile?_method=PUT" onsubmit="submitForm(event)">
-    <div>
-      <label for="motivation">Motivation - Why do you want to journal?</label>
-      </div>
-      <div>
-      <input name="motivation" id="motivation" value="<%= user.commitment ? user.commitment.motivation : '' %>" <%= user.commitment ? 'readonly' : '' %> required>
-    </div>
-    <div>
-      <label for="reward">Reward - What will you give yourself if you meet a journaling goal?</label>
-      </div>
-      <div>
-      <input name="reward" id="reward" value="<%= user.commitment ? user.commitment.reward : '' %>" <%= user.commitment ? 'readonly' : '' %>  required>
-    </div>
-    <div>
-      <label for="deterrent">Deterrent - What will you give up if you fail to meet that goal?</label>
-      </div><div>
-      <input name="deterrent" id="deterrent" value="<%= user.commitment ? user.commitment.deterrent : '' %>" <%= user.commitment ? 'readonly' : '' %>  required>
-    </div>
-    <div>
-      <label for="signature">Signature</label>
-      <input name="signature" id="signature" value="<%= user.commitment ? user.commitment.signature : '' %>" <%= user.commitment ? 'readonly' : '' %>  required>
+  <h3>Reset Password</h3>
+  <form method="POST" action="/users/profile?_method=PUT" class="mb-3">
+    <div class="mb-3">
+      <label for="new-password" class="form-label">New Password:</label>
+      <input type="password" name="newPassword" id="new-password" class="form-control" required>
     </div>
   
-    <button id="submit-btn" type="submit">Submit</button>
+    <button type="submit">Reset Password</button>
+
   </form>
+  <h3>Commitment</h3>
+  <div class="centered">
+    <form method="POST" action="/users/profile?_method=PUT" onsubmit="submitForm(event)">
+      <div class="mb-3">
+        <label for="motivation" class="form-label">Motivation - Why do you want to journal?</label>
+        <input name="motivation" id="motivation" value="<%= user.commitment ? user.commitment.motivation : '' %>" <%= user.commitment ? 'readonly' : '' %> class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="reward" class="form-label">Reward - What will you give yourself if you meet a journaling goal?</label>
+        <input name="reward" id="reward" value="<%= user.commitment ? user.commitment.reward : '' %>" <%= user.commitment ? 'readonly' : '' %> class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="deterrent" class="form-label">Deterrent - What will you give up if you fail to meet that goal?</label>
+        <input name="deterrent" id="deterrent" value="<%= user.commitment ? user.commitment.deterrent : '' %>" <%= user.commitment ? 'readonly' : '' %> class="form-control" required>
+      </div>
+      <div class="mb-3">
+        <label for="signature" class="form-label">Signature</label>
+        <input name="signature" id="signature" value="<%= user.commitment ? user.commitment.signature : '' %>" <%= user.commitment ? 'readonly' : '' %> class="form-control" required>
+      </div>
+      <button type="submit">Set Commitment</button>
+    </form>
   </div>
   
 

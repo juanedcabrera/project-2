@@ -1,34 +1,41 @@
 <%- include("../partials/header.ejs") %>
 
-<div class="centered">
-  <% if (message) { %>
-      <p><%= message %></p>
-    <% } %>
-  </div>
-
-<h1>Edit Entry</h1>
+<h2 class="centered">Edit Entry</h2>
 
 <form method="POST" action="/entries/<%= entry.id %>?_method=PUT">
+
   <h1>☀️</h1>
-  <h2>I am grateful for:</h2>
-  <label for="content">Content1:</label>
-  <input type="text" id="content1" name="content1" value="<%= entry.content.content1 %>" required>
-  <h2>What would make today great?</h2>
-  <label for="content">Content2:</label>
-  <input type="text" id="content2" name="content2" value="<%= entry.content.content2 %>" required>
-  <h2>Positive Affirmation</h2>
-  <label for="content">Content3:</label>
-  <input type="text" id="content3" name="content3" value="<%= entry.content.content3 %>" required>
-  <h1>☾</h1>
-  <h2>Good things that happened today:</h2>
-  <label for="content">Content4:</label>
-  <input type="text" id="content4" name="content4" value="<%= entry.content.content4 %>" required>
-  <h2>What I learned today:</h2>
-  <label for="content">Content5:</label>
-  <input type="text" id="content5" name="content5" value="<%= entry.content.content5 %>" required>
-  
+
+<div class="mb-3">
+  <label for="exampleFormControlTextarea1" class="form-label"><h4>I am grateful for:</h4></label>
+  <textarea class="form-control" type="text" id="content1" rows="5" name="content1" required><%= entry.content.content1 %></textarea>
+</div>
+
+<div class="mb-3">
+  <label for="exampleFormControlTextarea1" class="form-label"><h4>What would make today great?</h4></label>
+  <textarea class="form-control" type="text" id="content2" rows="3" name="content2" required><%= entry.content.content2 %></textarea>
+</div>
+
+<div class="mb-3">
+  <label for="exampleFormControlTextarea1" class="form-label"><h4>Positive Affirmation</h4></label>
+  <textarea class="form-control" type="text" id="content3" rows="3" name="content3" required><%= entry.content.content3 %></textarea>
+</div>
+
+<h1>☾</h1>
+
+  <div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label"><h4>Good things that happened today:</h4></label>
+    <textarea class="form-control" type="text" id="content4" rows="3" name="content4" required><%= entry.content.content4 %></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label"><h4>What I learned today:</h4></label>
+    <textarea class="form-control" type="text" id="content5" rows="3" name="content5" required><%= entry.content.content5 %></textarea>
+  </div>
 
   
+
+<div class="centered">
   <button type="submit">Save Changes</button>
 </form>
 
@@ -36,5 +43,6 @@
   <button type="submit">Delete</button>
   <input type="hidden" name="_method" value="DELETE">
 </form>
+</div>
 
 <%- include("../partials/footer.ejs") %>

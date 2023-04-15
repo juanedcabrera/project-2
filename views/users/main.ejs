@@ -36,7 +36,12 @@
     <div class="calendar-weekday">Fri</div>
     <div class="calendar-weekday">Sat</div>
   </div>
+  
   <div class="calendar-body">
+    <% let dayOfWeek = new Date(year, month, 1).getDay() %>
+    <% for(let i=1; i<=dayOfWeek; i++) { %>
+      <div class="calendar-date"></div>
+    <% } %>
     <% for(let i=1; i<=31; i++) {
       let currentDate = new Date(year, month, i).toLocaleDateString()
       let highlightClass = entries[currentDate] ? 'highlight' : ''
@@ -46,6 +51,10 @@
       <div class="calendar-date <%= highlightClass %> <%= isWeekend ? 'weekend' : '' %>">
         <%= i %>
       </div>
+    <% } %>
+    <% let daysInMonth = new Date(year, month + 1, 0).getDate() %>
+    <% for(let i=dayOfWeek+daysInMonth; i<42; i++) { %>
+      <div class="calendar-date"></div>
     <% } %>
   </div>
 </div>

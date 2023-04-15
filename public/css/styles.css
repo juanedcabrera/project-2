@@ -44,7 +44,7 @@ h4,h5 {
 
   .calendar {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     max-width: 700px;
     margin: 0 auto;
     border: 1px solid #ccc;
@@ -84,16 +84,16 @@ h4,h5 {
   }
   
   .calendar-body {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: repeat(6, 1fr);
+    display: flex;
+    flex-wrap: wrap;
     width: 100%;
   }
   
   .calendar-date {
+    flex-basis: calc(100% / 7);
     height: 60px;
     padding: 10px;
-    text-align: center;
+    text-align: right;
     box-sizing: border-box;
     border: 1px solid #ccc;
   }

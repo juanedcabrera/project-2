@@ -13,6 +13,8 @@
 <h4>Longest streak: <%= longestStreak %></h4>
 </div>
 
+<!-- CALENDAR -->
+
 <% let entries = {} %>
 <% for(let entry of allEntries) {
   let entryDate = new Date(entry.createdAt).toLocaleDateString()
@@ -35,14 +37,25 @@
     </div>
   </div>
   <div class="calendar-body">
-    <% for(let i=1; i<=31; i++) {
-      let currentDate = new Date(year, month, i).toLocaleDateString()
-      let highlightClass = entries[currentDate] ? 'highlight' : ''
-      let dayOfWeek = new Date(year, month, i).getDay()
-      let isWeekend = dayOfWeek === 0 || dayOfWeek === 6
-    %>
-      <div class="calendar-date <%= highlightClass %> <%= isWeekend ? 'weekend' : '' %>">
-        <%= i %>
+    <% let daysInMonth = new Date(year, month + 1, 0).getDate(); %>
+    <% let firstDayOfMonth = new Date(year, month, 1).getDay(); %>
+    <% let lastDayOfMonth = new Date(year, month, daysInMonth).getDay(); %>
+    <% let numRows = Math.ceil((firstDayOfMonth + daysInMonth) / 7); %>
+    <% let currentDate = 1; %>
+    <% for(let i=0; i<numRows; i++) { %>
+      <div class="calendar-row">
+        <% for(let j=0; j<7; j++) { %>
+          <% let isWeekend = (j === 0 || j === 6); %>
+          <% let highlightClass = entries[new Date(year, month, currentDate).toLocaleDateString()] ? 'highlight' : ''; %>
+          <div class="calendar-date <%= highlightClass %> <%= isWeekend ? 'weekend' : '' %>">
+            <% if(i === 0 && j < firstDayOfMonth || currentDate > daysInMonth) { %>
+              &nbsp;
+            <% } else { %>
+              <%= currentDate %>
+              <% currentDate++; %>
+            <% } %>
+          </div>
+        <% } %>
       </div>
     <% } %>
   </div>

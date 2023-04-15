@@ -20,8 +20,8 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-          <img src="/images/thoughtful-day-white-logo-feather.png" alt="thoughtful-day logo which is a feather" width="35px" height="35px">Thoughtful.day</img>
+        <a class="navbar-brand" href="/users/main">
+          <img src="/images/thoughtful-day-white-logo-feather.png" alt="thoughtful-day logo which is a feather" width="35px" height="35px" >Thoughtful.day</img>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -29,18 +29,12 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
           <ul class="navbar-nav">
             <% if (typeof user !== 'undefined' && user) { %>
-            <li class="nav-item">
-              <a class="nav-link" href="/users/main">Main</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Entries
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><a class="dropdown-item" href="/entries/">All Entries</a></li>
-                <li><a class="dropdown-item" href="/entries/new">Add Entry</a></li>
-              </ul>
-            </li>
+                <li class="nav-item">
+                  <a class="dropdown-item" href="/entries/">All Entries</a>
+                </li>
+                <li class="nav-item">
+                  <a class="dropdown-item" href="/entries/new">Add Entry</a>
+                </li>
             <li class="nav-item">
               <a class="nav-link" href="/users/profile">
                 <img class="rounded-circle shadow-4-strong" alt="avatar2" height="35px" width="35px" src="<%= user.img ? user.img : "/images/default.png" %>" />

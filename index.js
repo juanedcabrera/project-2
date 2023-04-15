@@ -58,7 +58,7 @@ app.use(async (req, res, next) => {
   // routes and controllers
 app.get('/', (req, res) => {
     if (res.locals.user) {
-        res.render("home-signed-in.ejs")
+        res.redirect(`/users/main`);
     } else {
        res.render('home.ejs')
     }

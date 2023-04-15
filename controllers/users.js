@@ -171,7 +171,11 @@ router.get("/main", async (req, res) => {
       { where: { id: user.id } }
     );
     message = "Let's work on that streak 📈";
-    res.render("users/main.ejs", { user, currentStreak, longestStreak });
+    const allEntries = await db.entry.findAll();
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    res.render("users/main.ejs", { user, currentStreak, longestStreak, allEntries, year, month });
   } catch (err) {
     console.log(err);
     res.status(500).send("Internal Server Error");
@@ -224,6 +228,12 @@ router.put("/profile", async (req, res) => {
     console.log(err);
     res.status(500).send("Internal Server Error");
   }
+});
+
+
+router.get('/main', async (req, res) => {
+  const allEntries = await db.entry.findAll();
+  res.render('calendar', { allEntries });
 });
 
 // export the router instance

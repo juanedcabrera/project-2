@@ -62,7 +62,7 @@ I will be using https://api.themotivate365.com/stoic-quote to retrieve stoicism 
 ![ERD](ERD.png)
 
 ## 🛣️ RESTful Routing Chart
-![Routes](ResfulRouting.drawio.png)#
+![Routes](ResfulRouting.drawio.png)
 
 ## Installation Instructions
 - Clone the repository:

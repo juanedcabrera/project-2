@@ -13,92 +13,41 @@
 <h4>Longest streak: <%= longestStreak %></h4>
 </div>
 
-<body>
-  <!-- Here we are using attributes like
-      cellspacing and cellpadding -->
+<% let entries = {} %>
+<% for(let entry of allEntries) {
+  let entryDate = new Date(entry.createdAt).toLocaleDateString()
+  entries[entryDate] = true
+} %>
 
-  <!-- The purpose of the cellpadding is 
-      the space that a user want between
-      the border of cell and its contents-->
-
-  <!-- cellspacing is used to specify the 
-      space between the cell and its contents -->
-      <div align="center">
-        <h2 style="color: green;">April 2023</h2>
-        <table cellspacing="21" cellpadding="21">
-          <caption align="top"></caption>
-          <thead>
-            <tr>
-              <th>Sun</th>
-              <th>Mon</th>
-              <th>Tue</th>
-              <th>Wed</th>
-              <th>Thu</th>
-              <th>Fri</th>
-              <th>Sat</th>
-            </tr>
-          </thead>
-          <tbody align="center">
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>1</td>
-              <td>2</td>
-            </tr>
-            <tr></tr>
-            <tr>
-              <td>3</td>
-              <td>4</td>
-              <td>5</td>
-              <td>6</td>
-              <td>7</td>
-              <td>8</td>
-              <td>9</td>
-            </tr>
-            <tr>
-              <td>10</td>
-              <td>11</td>
-              <td>12</td>
-              <td>13</td>
-              <td>14</td>
-              <td>15</td>
-              <td>16</td>
-            </tr>
-            <tr>
-              <td>17</td>
-              <td>18</td>
-              <td>19</td>
-              <td>20</td>
-              <td>21</td>
-              <td>22</td>
-              <td>23</td>
-            </tr>
-            <tr>
-              <td>24</td>
-              <td>25</td>
-              <td>26</td>
-              <td>27</td>
-              <td>28</td>
-              <td>29</td>
-              <td>30</td>
-            </tr>
-            <tr>
-              <td>31</td>
-              <td>1</td>
-              <td>2</td>
-              <td>3</td>
-              <td>4</td>
-              <td>5</td>
-              <td>6</td>
-            </tr>
-          </tbody>
-        </table>
+<div class="calendar">
+  <div class="calendar-header">
+    <div class="calendar-month">
+      <%= new Date(year, month).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) %>
+    </div>
+    <div class="calendar-weekdays">
+      <div class="calendar-weekday">Sun</div>
+      <div class="calendar-weekday">Mon</div>
+      <div class="calendar-weekday">Tue</div>
+      <div class="calendar-weekday">Wed</div>
+      <div class="calendar-weekday">Thu</div>
+      <div class="calendar-weekday">Fri</div>
+      <div class="calendar-weekday">Sat</div>
+    </div>
+  </div>
+  <div class="calendar-body">
+    <% for(let i=1; i<=31; i++) {
+      let currentDate = new Date(year, month, i).toLocaleDateString()
+      let highlightClass = entries[currentDate] ? 'highlight' : ''
+      let dayOfWeek = new Date(year, month, i).getDay()
+      let isWeekend = dayOfWeek === 0 || dayOfWeek === 6
+    %>
+      <div class="calendar-date <%= highlightClass %> <%= isWeekend ? 'weekend' : '' %>">
+        <%= i %>
       </div>
-      
-</body>
+    <% } %>
+  </div>
+</div>
 
-<!-- Inspired by https://morioh.com/p/7d923381e6ed -->
+
+
 <%- include("../partials/footer.ejs") %>

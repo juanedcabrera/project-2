@@ -8,6 +8,9 @@ h1 {
     font-size:40px;
 }
 
+p {
+  margin: 10px;
+}
 
 h4,h5 {
     margin: 10px;
@@ -20,15 +23,49 @@ h4,h5 {
 
 .row {
     display: flex;
-    justify-content: space-between; /* aligns the columns at the start and end of the row */
-    align-items: center; /* centers the content of the columns vertically */
+    justify-content: space-between; 
+    align-items: center; 
   }
 
-  @media screen and (max-width: 767px) {
-    .navbar h4 {
-      font-size: 14px;
+  .navbar-nav {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-toggler {
+    border: none;
+  }
+
+  .nav-item {
+    margin: 10px
+  }
+  
+  @media (max-width: 991.98px) {
+    .navbar-nav {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .nav-item {
+      margin-bottom: 10px;
+
+    }
+  
+    .nav-link {
+      padding: 10px;
+      width: 100%;
+      text-align: center;
+    }
+  
+    .nav-item-all-entries {
+      margin-right: auto; 
+    }
+  
+    .nav-item-add-entry {
+      margin-left: auto; 
     }
   }
+  
 
   .logo img {
     width: 35px;
@@ -98,17 +135,16 @@ h4,h5 {
     border: 1px solid #ccc;
   }
   
-  .calendar-date:hover {
+  /* .calendar-date:hover {
     background-color: #f5f5f5;
-  }
+  } */
   
   .highlight {
-    background-color: #8bc34a;
-    color: #fff;
+    background-color: #92e5ff;
+    color: #005eff;
   }
   
   .weekend {
-    background-color: #f5f5f5;
     font-weight: bold;
   }
 
@@ -123,8 +159,16 @@ h4,h5 {
     }
   }
   
-  .navbar-nav {
+  .menu-container {
+    position: relative;
+  }
+
+  .main-calendar-message {
+    max-width: 800px;
+    margin: 2rem auto;
     display: flex;
+    justify-content: center;
     align-items: center;
+    text-align: center; /* 
   }
   

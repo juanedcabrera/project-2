@@ -9,7 +9,7 @@ h1 {
 }
 
 
-h4 {
+h4,h5 {
     margin: 10px;
 }
 
@@ -24,6 +24,20 @@ h4 {
     align-items: center; /* centers the content of the columns vertically */
   }
 
+  @media screen and (max-width: 767px) {
+    .navbar h4 {
+      font-size: 14px;
+    }
+  }
 
+  .logo img {
+    width: 35px;
+    height: 35px;
+  }
   
-  
+  @media screen and (max-width: 767px) {
+    .logo img {
+      width: 25px;
+      height: 25px;
+    }
+  }

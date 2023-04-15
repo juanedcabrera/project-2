@@ -7,7 +7,7 @@
 </div>
 
 <div class="centered">
-<img src="<%= user.img ? user.img : "/images/default.png" %>" width="350" height="300"/>
+  <img src="<%= user.img ? user.img : "/images/default.png" %>" style="max-width: 200px; height: auto;"/>
 </div>
 
 <div class="centered">
@@ -20,6 +20,7 @@
 
 </br>
 </br>
+<div class="container">
 <div class="centered">
   <h3>Reset Password</h3>
   <form method="POST" action="/users/profile?_method=PUT" class="mb-3">
@@ -27,11 +28,11 @@
       <label for="new-password" class="form-label">New Password:</label>
       <input type="password" name="newPassword" id="new-password" class="form-control" required>
     </div>
-  
-    <button type="submit">Reset Password</button>
-
+      <button type="submit">Reset Password</button>
   </form>
+</div>
   <h3>Commitment</h3>
+  <p> Once you set your commitment you will not be able to modify it.</p>
   <div class="centered">
     <form method="POST" action="/users/profile?_method=PUT" onsubmit="submitForm(event)">
       <div class="mb-3">

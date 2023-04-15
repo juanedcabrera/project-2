@@ -169,6 +169,28 @@ h4,h5 {
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center; /* 
+    text-align: center; 
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+
+  .container {
+    padding: 0 15px;
+  }
+  
+  .card-deck {
+    width: 70%;
+  }
+  
+  @media (max-width: 576px) {
+    .card-deck {
+      width: 90%;
+    }
   }
   

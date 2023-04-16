@@ -52,7 +52,7 @@ NICE TO HAVE:
 [] points for logging in and points for posting
 
 MUST HAVE:
-[] submit buttons are showing white on white on mobile
+[X] submit buttons are showing white on white on mobile
 [] show.ejs has bad timezones at the bottom
 [] 3 most recent show as indented
 [] cap character limits on entries

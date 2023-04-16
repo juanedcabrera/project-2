@@ -212,11 +212,15 @@ h4,h5 {
     justify-content: center;
     align-items: center;
     height: 100%;
-    color: black;
-    border: black;
   }
   
   .align-items-center {
     display: flex;
     align-items: center;
   }
+
+  .button {
+    border: 1px solid black;
+    color: black;
+  }
+  

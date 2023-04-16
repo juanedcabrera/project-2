@@ -157,6 +157,14 @@ router.get("/main", async (req, res) => {
       return;
     }
 
+    const allEntries = await db.entry.findAll();
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth();
+      if (allEntries === undefined) {
+        allEntries = []
+      }
+
     // Get the user's most recent post
     const lastPost = await db.entry.findOne({
       where: { userId: user.id },
@@ -168,6 +176,9 @@ router.get("/main", async (req, res) => {
       // User has never posted before
       res.render("users/main.ejs", {
         user,
+        allEntries,
+        year,
+        month,
         currentStreak: 0,
         longestStreak: 0,
       });
@@ -188,13 +199,6 @@ router.get("/main", async (req, res) => {
     );
     message = "Let's work on that streak 📈";
 
-    const allEntries = await db.entry.findAll();
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth();
-      if (allEntries === undefined) {
-        allEntries = []
-      }
 
     res.render("users/main.ejs", { user, currentStreak, longestStreak, allEntries, year, month });
   } catch (err) {

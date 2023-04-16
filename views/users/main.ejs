@@ -21,7 +21,7 @@
 <!-- CALENDAR -->
 
 <% let entries = {} %>
-<% if(allEntries.length === 0) {
+<% if(allEntries && allEntries.length === 0) {
      next();
    } else {
      for(let entry of allEntries) {

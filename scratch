@@ -54,7 +54,8 @@ NICE TO HAVE:
 MUST HAVE:
 [X] submit buttons are showing white on white on mobile
 [] show.ejs has bad timezones at the bottom
-[] 3 most recent show as indented
+[X] 3 most recent show as indented
 [] cap character limits on entries
 [] calendar has 31 days for april
 [] calendar has extra row that doesn't exist
+[X] if no entries are in db than main.ejs won't render

@@ -21,10 +21,16 @@
 <!-- CALENDAR -->
 
 <% let entries = {} %>
-<% for(let entry of allEntries) {
-  let entryDate = new Date(entry.createdAt).toLocaleDateString()
-  entries[entryDate] = true
-} %>
+<% if(allEntries.length === 0) {
+     next();
+   } else {
+     for(let entry of allEntries) {
+       let entryDate = new Date(entry.createdAt).toLocaleDateString()
+       entries[entryDate] = true
+     }
+   }
+%>
+
 
 <div class="calendar">
   <div class="calendar-header">

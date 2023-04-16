@@ -42,13 +42,22 @@
   </div>
 
   <div class="row justify-content-left">
-    <% for (const adj of adjectives) { %>
+    <% 
+    // Shuffle the adjectives array
+    for (let i = adjectives.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [adjectives[i], adjectives[j]] = [adjectives[j], adjectives[i]];
+    }
+    
+    // Render the shuffled adjectives array
+    for (const adj of adjectives) { %>
       <div class="col-md-3 col-sm-6">
         <input type="checkbox" id="tag-<%= adj.name.toLowerCase() %>" name="tags" value="<%= adj.name.toLowerCase() %>">
         <label for="tag-<%= adj.name.toLowerCase() %>"><%= adj.name %></label>
       </div>
     <% } %>
   </div>
+  
       
   </div>
 </br>

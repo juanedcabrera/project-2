@@ -47,6 +47,22 @@ router.post("/", async (req, res) => {
         password: bcrypt.hashSync(req.body.password, 12),
       },
     });
+
+    if (created) {
+      const entry = {
+        userId: newUser.id,
+        content:{
+        content1: 'Sample content1',
+        content2: 'Sample content2',
+        content3: 'Sample content3',
+        content4: 'Sample content4',
+        content5: 'Sample content5',
+        },
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      await db.entry.create(entry);
+    }
     if (!created) {
       // if the user's returns as found -- don't let them sign up
       // console.log("user account exists");
@@ -171,10 +187,15 @@ router.get("/main", async (req, res) => {
       { where: { id: user.id } }
     );
     message = "Let's work on that streak 📈";
+
     const allEntries = await db.entry.findAll();
     const date = new Date();
     const year = date.getFullYear();
     const month = date.getMonth();
+      if (allEntries === undefined) {
+        allEntries = []
+      }
+
     res.render("users/main.ejs", { user, currentStreak, longestStreak, allEntries, year, month });
   } catch (err) {
     console.log(err);

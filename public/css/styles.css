@@ -202,3 +202,19 @@ h4,h5 {
     width: 500px;
     margin: 0 auto;
   }
+
+  #register-button-container {
+    text-align: center;
+  }
+
+  .centered-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .align-items-center {
+    display: flex;
+    align-items: center;
+  }

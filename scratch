@@ -59,3 +59,4 @@ MUST HAVE:
 [X] calendar has 31 days for april
 [X] calendar has extra row that doesn't exist
 [X] if no entries are in db than main.ejs won't render
+[] streaks aren't working perfectly. Need to check logic

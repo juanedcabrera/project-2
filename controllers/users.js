@@ -157,7 +157,7 @@ router.get("/main", async (req, res) => {
       return;
     }
 
-    const allEntries = await db.entry.findAll();
+    const allEntries = await res.locals.user.getEntries()
     const date = new Date();
     const year = date.getFullYear();
     const month = date.getMonth();
@@ -178,9 +178,7 @@ router.get("/main", async (req, res) => {
         user,
         allEntries,
         year,
-        month,
-        currentStreak: 0,
-        longestStreak: 0,
+        month
       });
       return;
     }

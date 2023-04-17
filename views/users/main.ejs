@@ -55,8 +55,8 @@
       <div class="calendar-date"></div>
     <% } %>
     <% for(let i=1; i<=thisIsDaysInMonth; i++) {
-      let currentDate = new Date(year, month, i).toLocaleDateString()
-      let highlightClass = entries[currentDate] ? 'highlight' : ''
+      let indexDate = new Date(year, month, i).toLocaleDateString()
+      let highlightClass = entries[indexDate] ? 'highlight' : ''
       let dayOfWeek = new Date(year, month, i).getDay()
       let isWeekend = dayOfWeek === 0 || dayOfWeek === 6
     %>

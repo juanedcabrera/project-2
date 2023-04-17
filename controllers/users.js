@@ -52,10 +52,10 @@ router.post("/", async (req, res) => {
       const entry = {
         userId: newUser.id,
         content:{
-        content1: 'What are ',
-        content2: 'Sample content2',
-        content3: 'Sample content3',
-        content4: 'Sample content4',
+        content1: 'Think about at least 3 things you are grateful for',
+        content2: 'If this thing would happen your day would be amazing',
+        content3: 'Example: I am strong and able to take on the world',
+        content4: 'Think about at least 3 things yo',
         content5: 'Sample content5',
         },
         createdAt: new Date(),

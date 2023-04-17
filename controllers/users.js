@@ -52,7 +52,7 @@ router.post("/", async (req, res) => {
       const entry = {
         userId: newUser.id,
         content:{
-        content1: 'Sample content1',
+        content1: 'What are ',
         content2: 'Sample content2',
         content3: 'Sample content3',
         content4: 'Sample content4',
@@ -256,10 +256,10 @@ router.put("/profile", async (req, res) => {
 });
 
 
-router.get('/main', async (req, res) => {
-  const allEntries = await db.entry.findAll();
-  res.render('calendar', { allEntries });
-});
+// router.get('/main', async (req, res) => {
+//   const allEntries = await db.entry.findAll();
+//   res.render('calendar', { allEntries });
+// });
 
 // export the router instance
 module.exports = router;

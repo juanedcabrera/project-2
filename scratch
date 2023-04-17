@@ -56,6 +56,6 @@ MUST HAVE:
 [] show.ejs has bad timezones at the bottom
 [X] 3 most recent show as indented
 [] cap character limits on entries
-[] calendar has 31 days for april
-[] calendar has extra row that doesn't exist
+[X] calendar has 31 days for april
+[X] calendar has extra row that doesn't exist
 [X] if no entries are in db than main.ejs won't render

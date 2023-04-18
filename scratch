@@ -42,6 +42,11 @@ ___________
 [X] mobile tags should show two instead of one column
 [X] make the tags random
 [X] Navigation rewired
+[X] submit buttons are showing white on white on mobile
+[X] 3 most recent show as indented
+[X] calendar has 31 days for april
+[X] calendar has extra row that doesn't exist
+[X] if no entries are in db than main.ejs won't render
 
 NICE TO HAVE:
 [] - Profile Page - Settings Page = where users could define some rules on edit, delete, journal type, maybe color theme
@@ -52,11 +57,6 @@ NICE TO HAVE:
 [] points for logging in and points for posting
 
 MUST HAVE:
-[X] submit buttons are showing white on white on mobile
 [] show.ejs has bad timezones at the bottom
-[X] 3 most recent show as indented
 [] cap character limits on entries
-[X] calendar has 31 days for april
-[X] calendar has extra row that doesn't exist
-[X] if no entries are in db than main.ejs won't render
 [] streaks aren't working perfectly. Need to check logic

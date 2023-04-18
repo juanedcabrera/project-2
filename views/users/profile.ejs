@@ -6,6 +6,12 @@
 <% } %>
 </div>
 
+<label for="journal-template">Choose a journal template:</label>
+<select id="journal-template" name="journal-template">
+  <option value="gratitude">Gratitude Journal</option>
+  <option value="accomplishments">Accomplishments Journal</option>
+</select>
+
 <div class="centered">
   <img src="<%= user.img ? user.img : "/images/default.png" %>" style="max-width: 200px; height: auto;"/>
 </div>

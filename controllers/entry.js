@@ -126,7 +126,7 @@ router.post("/", async (req, res) => {
     res.redirect("/entries");
   } catch (err) {
     console.log(err);
-    res.render("error");
+    res.render("unauthorized.ejs");
   }
 });
 

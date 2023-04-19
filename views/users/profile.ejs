@@ -6,11 +6,21 @@
 <% } %>
 </div>
 
-<label for="journal-template">Choose a journal template:</label>
-<select id="journal-template" name="journal-template">
-  <option value="gratitude">Gratitude Journal</option>
-  <option value="accomplishments">Accomplishments Journal</option>
-</select>
+<form method="POST" action="/users/profile?_method=PUT">
+  <input type="hidden" name="_method" value="PUT" />
+  <% for (let i = 0; i < templates.length; i++) { %>
+    <div>
+      <label>
+        <input type="checkbox" name="userSelectedTemplates" id="templates" value="<%= templates[i] %>"
+          <% if (selectedTemplates.includes(templates[i])) { %>checked<% } %>
+        >
+        <%= templates[i] %>
+      </label>
+    </div>
+  <% } %>
+  <button type="submit">Save Templates</button>
+</form>
+
 
 <div class="centered">
   <img src="<%= user.img ? user.img : "/images/default.png" %>" style="max-width: 200px; height: auto;"/>

@@ -24,11 +24,15 @@ router.get("/login", (req, res) => {
   }
 });
 
+// Define an array of template names
+const templates = ["template1", "template2", "template3"];
+
 // GET /users/profile -- take user to their profile page
 router.get("/profile", (req, res) => {
   const user = res.locals.user;
-  res.render("users/profile.ejs", { user, message: req.query.message });
-});
+  const selectedTemplates = user.templates || []; // Get the user's selected templates, if any
+  res.render("users/profile.ejs", { user, selectedTemplates, templates, message: req.query.message });
+  });
 
 // POST /users -- CREATE a new user from the form @ GET /users/new
 router.post("/", async (req, res) => {
@@ -208,7 +212,7 @@ router.get("/main", async (req, res) => {
 // PUT route to update the user's password and commitment
 router.put("/profile", async (req, res) => {
   try {
-    const { newPassword, motivation, reward, deterrent, signature, my_file } =
+    const { newPassword, motivation, reward, deterrent, signature, my_file, userSelectedTemplates } =
       req.body;
     const { user } = res.locals;
 
@@ -217,36 +221,42 @@ router.put("/profile", async (req, res) => {
     if (newPassword) {
       // Hash new password
       const hashedPassword = await bcrypt.hash(newPassword, 12);
-
+    
       // Update password in db
       await db.user.update(
-        { password: hashedPassword },
-        { where: { id: user.id } }
+        { password: hashedPassword }, { where: { id: user.id } }
       );
-
+    
       message = "New password created 🥳";
     }
-
+    
     if (motivation || reward || deterrent || signature) {
       // Combine commitment parts into JSON object
       const commitment = { motivation, reward, deterrent, signature };
       // console.log(commitment)
-
+    
       // Update commitment in db
       await db.user.update({ commitment }, { where: { id: user.id } });
-
+    
       message = "Commitment updated 🥳";
     }
-
+    
     if (my_file) {
       await db.user.update(
-        { img: req.body.my_file },
-        { where: { id: user.id } }
-      );
-    }
-    message = "Profile Pic Updated 🎉";
+        { img: req.body.my_file }, { where: { id: user.id } });
 
-    res.redirect(`/users/profile?message=${message}`);
+      message = "Profile Pic Updated 🎉";
+    }
+    
+    if (userSelectedTemplates) {
+      // Update user's selected template
+      const templates = { userSelectedTemplates }
+      await db.user.update({ template: templates }, { where: { id: user.id } });
+      message = "Template saved successfully 🎉";
+    }
+    
+
+res.redirect(`/users/profile?message=${message}`);
   } catch (err) {
     console.log(err);
     res.status(500).send("Internal Server Error");

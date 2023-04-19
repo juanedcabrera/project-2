@@ -60,3 +60,4 @@ MUST HAVE:
 [] show.ejs has bad timezones at the bottom
 [] cap character limits on entries
 [] streaks aren't working perfectly. Need to check logic
+[] user profile - have a timezone added to db and profile

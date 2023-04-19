@@ -1,7 +1,8 @@
 <%- include("../partials/header.ejs") %>
 
 <h2 class="centered">Welcome <%=user.first_name%></h2>
- 
+
+
 <div class="centered">
 <% if (message) { %>
     <p><%= message %></p>
@@ -22,7 +23,7 @@
 
 <% let entries = {} %>
 <% if(allEntries && allEntries.length === 0) {
-     next();
+     return;
    } else {
      for(let entry of allEntries) {
        let entryDate = new Date(entry.createdAt).toLocaleDateString()

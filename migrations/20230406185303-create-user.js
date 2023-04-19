@@ -21,6 +21,9 @@ module.exports = {
       password: {
         type: Sequelize.STRING
       },
+      template: {
+        type: Sequelize.JSONB
+      },
       current_streak: {
         type: Sequelize.INTEGER
       },
@@ -32,6 +35,9 @@ module.exports = {
       },
       img: {
         type: Sequelize.TEXT
+      },
+      timezone: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

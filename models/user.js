@@ -19,10 +19,12 @@ module.exports = (sequelize, DataTypes) => {
     last_name: DataTypes.TEXT,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
+    template: DataTypes.JSONB,
     current_streak: DataTypes.INTEGER,
     longest_streak: DataTypes.INTEGER,
     commitment: DataTypes.JSONB,
-    img: DataTypes.TEXT
+    img: DataTypes.TEXT,
+    timezone: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'user',

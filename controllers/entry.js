@@ -60,23 +60,23 @@ router.get("/", async (req, res) => {
 router.get("/new", async (req, res) => {
 
   const user = res.locals.user;
-  console.log(`This is ${req.query.submit}`)
+  console.log(`This is ${req.query.userSelectedTemplates}`)
 
   
- // Check if the form was submitted
- if (req.query.submit) {
-  // Get the selected template from the form
-  const selectedTemplate = {};
-  Object.keys(user.template).forEach(function(key) {
-    selectedTemplate[key] = req.query[key];
-  });
-
-  // Render SELECTTEMPLATE.ejs in the partials with the selected template
+// Check if the form was submitted
+if (req.query.userSelectedTemplates) {
+  selectedTemplate = req.query.userSelectedTemplates
+  
+  // Render template partial
+  console.log(`Selected Template: ${selectedTemplate}`)
   res.render("entries/new.ejs", {
     user,
+    selectedTemplate,
   });
+
 } else {
   // Render the form to select a template
+  console.log(`This is ${req.query.userSelectedTemplates}`)
   res.render("entries/new.ejs", {
     user,
 

@@ -4,6 +4,9 @@ const db = require("../models");
 const cryptoJs = require("crypto-js");
 const methodOverride = require("method-override");
 const { Op, Sequelize } = require("sequelize");
+const path = require("path");
+const fs = require("fs");
+const ejs = require("ejs");
 
 
 // GET /entries -- INDEX route to show all the entries
@@ -55,6 +58,35 @@ router.get("/", async (req, res) => {
 
 // GET /entries/new -- SHOW form to create a new entry
 router.get("/new", async (req, res) => {
+
+  const user = res.locals.user;
+  console.log(`This is ${req.query.submit}`)
+
+  
+ // Check if the form was submitted
+ if (req.query.submit) {
+  // Get the selected template from the form
+  const selectedTemplate = {};
+  Object.keys(user.template).forEach(function(key) {
+    selectedTemplate[key] = req.query[key];
+  });
+
+  // Render SELECTTEMPLATE.ejs in the partials with the selected template
+  res.render("entries/new.ejs", {
+    user,
+  });
+} else {
+  // Render the form to select a template
+  res.render("entries/new.ejs", {
+    user,
+
+  });
+}
+});
+
+
+// PUT /entries/new -- SHOW form to create a new entry
+router.put("/new", async (req, res) => {
   let quotes = [];
   const apiUrl = "https://api.themotivate365.com/stoic-quote";
   try {
@@ -70,12 +102,15 @@ router.get("/new", async (req, res) => {
   const adjectives = await db.tag.findAll()
 
   const user = res.locals.user;
+  
   res.render("entries/new.ejs", {
     user,
     quotes,
+    filePath,
     adjectives: adjectives,
   });
 });
+
 
 // router.get('/unauthorized') method
 router.get("/unauthorized", function (req, res, next) {

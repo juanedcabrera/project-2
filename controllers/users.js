@@ -5,6 +5,7 @@ const db = require("../models");
 const bcrypt = require("bcrypt");
 const cryptoJs = require("crypto-js");
 const uploadcareWidget = require("uploadcare-widget");
+const methodOverride = require("method-override");
 
 // GET /users/new -- show route for a form that creates a new user (sign up for the app)
 router.get("/new", (req, res) => {
@@ -25,7 +26,7 @@ router.get("/login", (req, res) => {
 });
 
 // Define an array of template names
-const templates = ["template1", "template2", "template3"];
+const templates = ["freeform", "gratitude", "accomplishment"];
 
 // GET /users/profile -- take user to their profile page
 router.get("/profile", (req, res) => {
@@ -56,11 +57,11 @@ router.post("/", async (req, res) => {
       const entry = {
         userId: newUser.id,
         content:{
-        content1: 'Think about at least 3 things you are grateful for',
-        content2: 'If this thing would happen your day would be amazing',
+        content1: 'Example: Think about at least 3 things you are grateful for',
+        content2: 'Example: If this thing would happen your day would be amazing',
         content3: 'Example: I am strong and able to take on the world',
-        content4: 'Think about at least 3 things yo',
-        content5: 'Sample content5',
+        content4: 'Example: Think about at least 3 things yo',
+        content5: 'Example: Sample content5',
         },
         createdAt: new Date(),
         updatedAt: new Date()

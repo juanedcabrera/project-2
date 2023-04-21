@@ -58,6 +58,19 @@ router.get("/", async (req, res) => {
 
 // GET /entries/new -- SHOW form to create a new entry
 router.get("/new", async (req, res) => {
+  let quotes = [];
+  const apiUrl = "https://api.themotivate365.com/stoic-quote";
+  try {
+    await fetch(apiUrl)
+      .then((res) => res.json())
+      .then((data) => {
+        quotes = data;
+      });
+  } catch (err) {
+    console.log(err);
+  }
+
+  const adjectives = await db.tag.findAll()
 
   const user = res.locals.user;
   console.log(`This is ${req.query.userSelectedTemplates}`)
@@ -65,13 +78,32 @@ router.get("/new", async (req, res) => {
   
 // Check if the form was submitted
 if (req.query.userSelectedTemplates) {
-  selectedTemplate = req.query.userSelectedTemplates
+  
+  let selectedTemplate = req.query.userSelectedTemplates
+
+if (selectedTemplate === 'gratitude') {
+
+  res.render('./entries/templates/gratitude.ejs', {  
+    user,
+    selectedTemplate,
+    quotes,
+    adjectives: adjectives, });
+} else if (selectedTemplate === 'accomplishment') {
+
+  res.render('./entries/templates/accomplishment', { selectedTemplate });
+} else {
+  // render a default template or show an error message
+  res.render('defaultTemplate', { error: 'Invalid template selected.' });
+}
+
   
   // Render template partial
   console.log(`Selected Template: ${selectedTemplate}`)
   res.render("entries/new.ejs", {
     user,
     selectedTemplate,
+    quotes,
+    adjectives: adjectives,
   });
 
 } else {
@@ -106,7 +138,6 @@ router.put("/new", async (req, res) => {
   res.render("entries/new.ejs", {
     user,
     quotes,
-    filePath,
     adjectives: adjectives,
   });
 });

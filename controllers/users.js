@@ -47,6 +47,7 @@ router.post("/", async (req, res) => {
       defaults: {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
+        template: {"userSelectedTemplates": ["freeform"]},
         current_streak: 0,
         longest_streak: 0,
         password: bcrypt.hashSync(req.body.password, 12),
@@ -250,11 +251,19 @@ router.put("/profile", async (req, res) => {
     }
     
     if (userSelectedTemplates) {
-      // Update user's selected template
-      const templates = { userSelectedTemplates:[...userSelectedTemplates] }
+      // Handle single or multiple selected templates
+      let templates;
+      if (Array.isArray(userSelectedTemplates)) {
+        templates = { userSelectedTemplates: [...userSelectedTemplates] };
+      } else {
+        templates = { userSelectedTemplates: [userSelectedTemplates] };
+      }
+      
+      // Update user's selected templates
       await db.user.update({ template: templates }, { where: { id: user.id } });
       message = "Template saved successfully 🎉";
     }
+    
     
 
 res.redirect(`/users/profile?message=${message}`);

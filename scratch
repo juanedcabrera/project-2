@@ -45,11 +45,14 @@ ___________
 [X] submit buttons are showing white on white on mobile
 [X] 3 most recent show as indented
 [X] calendar has 31 days for april
-[X] calendar has extra row that doesn't exist
+[X] calendar has extra row that shouldn't exist
 [X] if no entries are in db than main.ejs won't render
+[X] Profile page - select journal types
+[X] Add Entry - select journal types
+[X] Render add-entry through partials
 
 NICE TO HAVE:
-[] - Profile Page - Settings Page = where users could define some rules on edit, delete, journal type, maybe color theme
+[] - Profile Page - Settings Page = where users could define some rules on edit, delete, maybe color theme
 [] add a night time entry field asking "Summarize today in one word"
 [] Once you register it should prompt you to create your commitment
 [] After commitment is set, offer journal entry immediately (allow the user to skip)
@@ -57,8 +60,7 @@ NICE TO HAVE:
 [] points for logging in and points for posting
 
 MUST HAVE:
-[] show.ejs has bad timezones at the bottom
 [] cap character limits on entries
 [] streaks aren't working perfectly. Need to check logic
 [] user profile - have a timezone added to db and profile
-[] 
+[] all entries need journal type as a searchable field

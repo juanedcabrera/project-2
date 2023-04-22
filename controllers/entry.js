@@ -8,7 +8,6 @@ const path = require("path");
 const fs = require("fs");
 const ejs = require("ejs");
 
-
 // GET /entries -- INDEX route to show all the entries
 router.get("/", async (req, res) => {
   try {
@@ -70,52 +69,31 @@ router.get("/new", async (req, res) => {
     console.log(err);
   }
 
-  const adjectives = await db.tag.findAll()
+  const adjectives = await db.tag.findAll();
 
   const user = res.locals.user;
-  console.log(`This is ${req.query.userSelectedTemplates}`)
+  console.log(`This is ${req.query.userSelectedTemplates}`);
 
-  
-// Check if the form was submitted
-if (req.query.userSelectedTemplates) {
-  
-  let selectedTemplate = req.query.userSelectedTemplates
+  // Check if the form was submitted
+  if (req.query.userSelectedTemplates) {
+    let selectedTemplate = req.query.userSelectedTemplates;
 
-if (selectedTemplate === 'gratitude') {
-
-  res.render('./entries/templates/gratitude.ejs', {  
-    user,
-    selectedTemplate,
-    quotes,
-    adjectives: adjectives, });
-} else if (selectedTemplate === 'accomplishment') {
-
-  res.render('./entries/templates/accomplishment', { selectedTemplate });
-} else {
-  // render a default template or show an error message
-  res.render('defaultTemplate', { error: 'Invalid template selected.' });
-}
-
-  
-  // Render template partial
-  console.log(`Selected Template: ${selectedTemplate}`)
-  res.render("entries/new.ejs", {
-    user,
-    selectedTemplate,
-    quotes,
-    adjectives: adjectives,
-  });
-
-} else {
-  // Render the form to select a template
-  console.log(`This is ${req.query.userSelectedTemplates}`)
-  res.render("entries/new.ejs", {
-    user,
-
-  });
-}
+    // Render template partial
+    console.log(`Selected Template: ${selectedTemplate}`);
+    res.render("entries/new.ejs", {
+      user,
+      selectedTemplate,
+      quotes,
+      adjectives,
+    });
+  } else {
+    // Render the form to select a template
+    res.render("entries/new.ejs", {
+      user,
+      selectedTemplate: false,
+    });
+  }
 });
-
 
 // PUT /entries/new -- SHOW form to create a new entry
 router.put("/new", async (req, res) => {
@@ -131,17 +109,16 @@ router.put("/new", async (req, res) => {
     console.log(err);
   }
 
-  const adjectives = await db.tag.findAll()
+  const adjectives = await db.tag.findAll();
 
   const user = res.locals.user;
-  
+
   res.render("entries/new.ejs", {
     user,
     quotes,
     adjectives: adjectives,
   });
 });
-
 
 // router.get('/unauthorized') method
 router.get("/unauthorized", function (req, res, next) {
@@ -336,4 +313,3 @@ router.get("/search", async (req, res) => {
 });
 // export the router instance
 module.exports = router;
-

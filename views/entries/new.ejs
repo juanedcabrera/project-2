@@ -1,19 +1,21 @@
 <%- include("../partials/header.ejs") %>
 
-<h1>Select Template</h1>
+<h1>What do you want to work on?</h1>
 <form action="/entries/new" method="/entries/new?_method=PUT">
   <% Object.keys(user.template).forEach(function(key) { %>
     <label for="<%= key %>">Templates:</label>
     <select name="<%= key %>" id="<%= key %>">
       <% Object.values(user.template[key]).forEach(function(option) { %>
-        <option value="<%= option %>"><%= option %></option>
+        <option value="<%= option %>" <% if (option === selectedTemplate) {%>selected<% }%>><%= option %></option>
       <% }); %>
     </select>
   <% }); %>
-  <button type="submit">Render Template</button>
+  <button type="submit">Select Template</button>
 </form>
 
-<!-- // conditional statement that checks the template and conditionally renders 
+<% if (selectedTemplate) { %>
+  <%- include(`./templates/${selectedTemplate}.ejs`) %>
+<% } %>
 
 
-<%- include('../partials/footer.ejs') %>
+  <%- include('../partials/footer.ejs') %>

@@ -251,7 +251,7 @@ router.put("/profile", async (req, res) => {
     
     if (userSelectedTemplates) {
       // Update user's selected template
-      const templates = { userSelectedTemplates }
+      const templates = { userSelectedTemplates:[...userSelectedTemplates] }
       await db.user.update({ template: templates }, { where: { id: user.id } });
       message = "Template saved successfully 🎉";
     }

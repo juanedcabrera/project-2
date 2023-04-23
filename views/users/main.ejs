@@ -9,21 +9,22 @@
   <% } %>
 </div>
 
-<div class="centered">
-<h4>Current streak: <%= currentStreak %></h4>
-<h4>Longest streak: <%= longestStreak %></h4>
+
+<div class="main-message">
+  <p>Welcome to our journal platform app! We're excited to have you onboard as you embark on a journey of self-discovery and personal growth. Our app is designed to help you capture your thoughts, emotions, and experiences in a user-friendly interface that makes it easy to get started and stay committed to your journaling practice.
+    <p>3 interesting facts:</p>
+  
+   <p>Journaling has been shown to reduce stress and anxiety levels, with one study finding that just 20 minutes of journaling per day for four consecutive days can significantly decrease symptoms of anxiety and depression.</p>
+  
+   <p>Journaling can improve your memory and cognitive functioning, with research suggesting that the act of writing down your thoughts and experiences can help you better process and retain information.</p>
+  
+   <p>Journaling can boost your creativity and problem-solving skills, as it allows you to explore different perspectives and solutions to challenges in a safe and non-judgmental space.</p>
 </div>
-
-<p class="main-calendar-message">
-  Keep posting to your calendar! The calendar will highlight all the days that you've posted an entry, so you can easily see your progress over time. Plus, the more you post, the more complete your calendar will be. Don't miss out on the satisfaction of seeing a full year's worth of entries - keep posting and watch your calendar come to life!
-</p>
-
 
 <!-- CALENDAR -->
 
 <% let entries = {} %>
 <% if(allEntries && allEntries.length === 0) {
-     return;
    } else {
      for(let entry of allEntries) {
        let entryDate = new Date(entry.createdAt).toLocaleDateString()
@@ -60,10 +61,17 @@
       let highlightClass = entries[indexDate] ? 'highlight' : ''
       let dayOfWeek = new Date(year, month, i).getDay()
       let isWeekend = dayOfWeek === 0 || dayOfWeek === 6
+      let dateLink = new Date(year, month, i).toISOString().slice(0, 10);
     %>
-      <div class="calendar-date <%= highlightClass %> <%= isWeekend ? 'weekend' : '' %>">
-        <%= i %>
-      </div>
+      <% if(entries[indexDate]) { %>
+        <a href="/entries?wprd=&tag=&type=&date=<%= dateLink %>" class="calendar-date <%= highlightClass %> <%= isWeekend ? 'weekend' : '' %>">
+          <%= i %>
+        </a>
+      <% } else { %>
+        <div class="calendar-date <%= highlightClass %> <%= isWeekend ? 'weekend' : '' %>">
+          <%= i %>
+        </div>
+      <% } %>
     <% } %>
     <% let daysInMonth = new Date(year, month, 0).getDate() %>
     <% for(let i=dayOfWeek+daysInMonth; i<42; i++) { %>

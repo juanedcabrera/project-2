@@ -71,21 +71,6 @@ router.post("/", async (req, res) => {
       },
     });
 
-    if (created) {
-      const entry = {
-        userId: newUser.id,
-        content:{
-        content1: 'Example: Think about at least 3 things you are grateful for',
-        content2: 'Example: If this thing would happen your day would be amazing',
-        content3: 'Example: I am strong and able to take on the world',
-        content4: 'Example: Think about at least 3 things yo',
-        content5: 'Example: Sample content5',
-        },
-        createdAt: new Date(),
-        updatedAt: new Date()
-      };
-      await db.entry.create(entry);
-    }
     if (!created) {
       // if the user's returns as found -- don't let them sign up
       // console.log("user account exists");

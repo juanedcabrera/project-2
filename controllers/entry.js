@@ -90,7 +90,7 @@ router.get("/new", async (req, res) => {
 
   // Check if the form was submitted
   if (req.query.userSelectedTemplates) {
-    let selectedTemplate = req.query.userSelectedTemplates;
+    let selectedTemplate = req.query.userSelectedTemplates; 
 
     // Render template partial
     console.log(`Selected Template: ${selectedTemplate}`);
@@ -151,6 +151,7 @@ router.post("/", async (req, res) => {
       content3: req.body.content3,
       content4: req.body.content4,
       content5: req.body.content5,
+      content6: req.body.content6,
     };
     let tags = req.body.tags; // had to change to let for tags to work
     const selectedTemplate = req.body.selectedTemplate
@@ -235,6 +236,7 @@ router.get("/:id", async (req, res) => {
         },
       ],
     });
+    let selectedTemplate = foundEntry[0].type
     if (!foundEntry.length) {
       // Entry not found redirect to index
       return res.redirect("/entries?message=Entry not found");
@@ -242,6 +244,7 @@ router.get("/:id", async (req, res) => {
       // render show page for entry
       res.render("entries/show.ejs", {
         entry: foundEntry[0],
+        selectedTemplate
       });
     }
   } catch (err) {
@@ -267,10 +270,14 @@ router.get("/:id/edit", async (req, res) => {
         entryId: req.params.id,
       },
     });
-
+    let selectedTemplate = foundEntry[0].type
     // Render the edit form with the entry data
     // console.log(adjectives);
-    res.render("entries/edit-entry", { entry: foundEntry[0], adjectives });
+    res.render("entries/edit-entry", { 
+      entry: foundEntry[0], 
+      adjectives,
+      selectedTemplate 
+    });
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
@@ -295,13 +302,14 @@ router.put("/:id", async (req, res) => {
     }
 
     // Grouping all Content together for JSONB
-    const { content1, content2, content3, content4, content5 } = req.body;
+    const { content1, content2, content3, content4, content5, content6 } = req.body;
     const updatedContent = {
       content1,
       content2,
       content3,
       content4,
       content5,
+      content6,
     };
 
     // Update the entry with the new data

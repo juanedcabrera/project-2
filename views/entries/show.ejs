@@ -1,6 +1,6 @@
 <%- include("../partials/header.ejs")%>
 
-<h2 class="centered">Entry on <%= entry.createdAt.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true }) %></h2>
+<h2 class="centered">Entry on <%= entry.createdAt.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', hour12: true }) %></h2>
 <div class="centered">
   <!-- Disable the Edit Entry link -->
   <a href="/entries/<%= entry.id %>/edit" class="disabled" aria-disabled="true">Edit Entry</a>
@@ -47,13 +47,6 @@
   <% } %>
 </h4>
 
-<div>
-<p>Created:</p>
-<%= entry.createdAt.toLocaleString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true, timeZoneName : "short", timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone}) %></p>
-
-<p>Last Updated:</p>
-<p><%= entry.updatedAt.toLocaleString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true, timeZoneName : "short"}) %></p>
-</div>
 
 
 

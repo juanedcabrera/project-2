@@ -12,7 +12,7 @@ const { userInfo } = require("os");
 // GET /entries -- INDEX route to show all the entries
 router.get("/", async (req, res) => {
   try {
-    const { word, tag, date } = req.query;
+    const { word, tag, date, type } = req.query;
     const searchOptions = {
       where: {
         userId: res.locals.user.id,
@@ -48,6 +48,19 @@ router.get("/", async (req, res) => {
         ],
       };
     }
+
+    if (type) {
+      searchOptions.where.type = {
+        [Op.and]: [
+          Sequelize.where(
+            Sequelize.cast(Sequelize.col("type"), "text"),
+            "ILIKE",
+            `%${type}%`
+          ),
+        ],
+      };
+    }
+    
 
     const entries = await db.entry.findAll(searchOptions);
     res.render("entries/index.ejs", { entries });
@@ -165,7 +178,7 @@ router.post("/", async (req, res) => {
     const formattedDateTime = nowUTC.toISOString();
 
 
-      console.log(req.body)
+    console.log(req.body)
     console.log(nowUTC);
     console.log(timeZoneOffsetInHours);
     console.log(newHour);

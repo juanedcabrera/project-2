@@ -231,7 +231,7 @@ router.get("/main", async (req, res) => {
 // PUT route to update the user's password and commitment
 router.put("/profile", async (req, res) => {
   try {
-    const { newPassword, motivation, reward, deterrent, signature, my_file, userSelectedTemplates } =
+    const { newPassword, motivation, reward, deterrent, signature, my_file, userSelectedTemplates, newTimezone } =
       req.body;
     const { user } = res.locals;
 
@@ -265,6 +265,15 @@ router.put("/profile", async (req, res) => {
         { img: req.body.my_file }, { where: { id: user.id } });
 
       message = "Profile Pic Updated 🎉";
+    }
+
+    if (newTimezone) {
+      // Update password in db
+      await db.user.update(
+        { timezone: newTimezone }, { where: { id: user.id } }
+      );
+    
+      message = "Timezone updated 🥳";
     }
     
     if (userSelectedTemplates) {

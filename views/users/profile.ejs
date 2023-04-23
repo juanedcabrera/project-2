@@ -47,6 +47,24 @@
       <button type="submit">Reset Password</button>
   </form>
 </div>
+
+<div class="centered">
+  <h3>Reset Timezone</h3>
+  <form method="POST" action="/users/profile?_method=PUT" class="mb-3">
+    <div class="mb-3">
+      <label for="new-timezone" class="form-label">New Timezone:</label>
+      <select name="newTimezone" id="new-timezone" type="timezone" class="form-control" required/>
+      <option value="-5">New York</option>
+      <option value="-6">Chicago</option>
+      <option value="-7">Denver</option>
+      <option value="-8">Los Angeles</option>
+  </select>
+    </div>
+      <button type="submit">Reset Timezone</button>
+  </form>
+</div>
+
+
   <h3>Commitment</h3>
   <p> Once you set your commitment you will not be able to modify it.</p>
   <div class="centered">

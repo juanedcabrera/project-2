@@ -39,6 +39,21 @@ router.get("/profile", (req, res) => {
 router.post("/", async (req, res) => {
   try {
     // console.log(req.body);
+    const date = new Date();
+    const offsetInMinutes = date.getTimezoneOffset();
+    const offsetHours = Math.abs(offsetInMinutes) / 60;
+    const offsetMinutes = Math.abs(offsetInMinutes) % 60;
+    const sign = offsetInMinutes > 0 ? '-' : '+';
+    const formattedOffset = sign + pad(offsetHours)
+    
+    function pad(num) {
+      return String(num).padStart(2, '0');
+    }
+    
+  
+    
+    
+    
     // do a find or create with the user's given email
     const [newUser, created] = await db.user.findOrCreate({
       where: {
@@ -50,7 +65,9 @@ router.post("/", async (req, res) => {
         template: {"userSelectedTemplates": ["freeform"]},
         current_streak: 0,
         longest_streak: 0,
+        timezone: formattedOffset,
         password: bcrypt.hashSync(req.body.password, 12),
+
       },
     });
 

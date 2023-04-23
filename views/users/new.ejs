@@ -1,5 +1,6 @@
 <%- include("../partials/header.ejs") %>
 
+
 <div class="centered">
 
   <section class="h-100">
@@ -50,7 +51,8 @@
 										  </button>
 									</div>
 								  </div>
-								  
+								  <input type="hidden" name="locale" value="{{ localestring }}">
+								  <% console.log(Intl.DateTimeFormat().resolvedOptions().timeZone) %>
 							</form>
 						</div>
 						<div class="card-footer py-3 border-0">
@@ -67,6 +69,10 @@
 		</div>
 	</section>
 
+	<script>
+		// Set timezone value to hidden field
+		document.getElementById("timezone").value = Intl.DateTimeFormat().resolvedOptions().timeZone;
+	  </script>
 	<script src="js/login.js"></script>
 
 <%- include('../partials/footer.ejs') %>

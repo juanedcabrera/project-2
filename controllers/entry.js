@@ -7,6 +7,7 @@ const { Op, Sequelize } = require("sequelize");
 const path = require("path");
 const fs = require("fs");
 const ejs = require("ejs");
+const { userInfo } = require("os");
 
 // GET /entries -- INDEX route to show all the entries
 router.get("/", async (req, res) => {
@@ -139,6 +140,7 @@ router.post("/", async (req, res) => {
       content5: req.body.content5,
     };
     let tags = req.body.tags; // had to change to let for tags to work
+    const selectedTemplate = req.body.selectedTemplate
 
     const decryptedPk = cryptoJs.AES.decrypt(
       req.cookies.userId,
@@ -147,37 +149,36 @@ router.post("/", async (req, res) => {
     const decryptedPkString = decryptedPk.toString(cryptoJs.enc.Utf8);
     const user = await db.user.findByPk(decryptedPkString);
 
+    // Get the current date and time in UTC
+    const nowUTC = new Date();
+
+    // Get the time zone offset from the user object
+    const timeZoneOffsetInHours = user.timezone;
+
+    // Calculate the new hour based on the time zone offset
+    const newHour = nowUTC.getUTCHours() + timeZoneOffsetInHours;
+
+    // Set the new hour in the Date object
+    nowUTC.setUTCHours(newHour);
+
+    // Format the date and time in the ISO 8601 format
+    const formattedDateTime = nowUTC.toISOString();
+
+
+      console.log(req.body)
+    console.log(nowUTC);
+    console.log(timeZoneOffsetInHours);
+    console.log(newHour);
+    console.log(formattedDateTime);
+    console.log(selectedTemplate)
 
     
-// Get the current date and time in UTC
-const nowUTC = new Date();
-
-// Get the time zone offset from the user object
-const timeZoneOffsetInHours = user.timezone;
-
-// Calculate the new hour based on the time zone offset
-const newHour = nowUTC.getUTCHours() + timeZoneOffsetInHours;
-
-// Set the new hour in the Date object
-nowUTC.setUTCHours(newHour);
-
-// Format the date and time in the ISO 8601 format
-const formattedDateTime = nowUTC.toISOString();
-
-// The iso8601DateTime now contains the date and time in the ISO 8601 format
-
-
-console.log(nowUTC)
-console.log(timeZoneOffsetInHours)
-console.log(newHour)
-console.log(formattedDateTime);
-
-
 
     const newEntry = await db.entry.create({
       userId: user.id,
       content: content,
       createdAt: formattedDateTime,
+      type: selectedTemplate,
     });
 
     // tag logic

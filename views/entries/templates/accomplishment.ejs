@@ -1,5 +1,8 @@
 
 <form method="POST" action="/entries">
+    <!-- This is to grab selectedTemplate for the POST route -->
+    <input type="hidden" name="selectedTemplate" value="<%= selectedTemplate %>">
+
   <div class="centered">
   <h1>📝</h1>
   <div class="mb-3">

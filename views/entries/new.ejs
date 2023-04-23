@@ -10,9 +10,12 @@
       <% }); %>
     </select>
   <% }); %>
+
   <button type="submit">Select</button>
 </form>
 
+
+<!-- This is where the partial for the selected template is being rendered -->
 <% if (selectedTemplate) { %>
   <%- include(`./templates/${selectedTemplate}.ejs`) %>
 <% } %>

@@ -38,7 +38,7 @@ router.get("/profile", (req, res) => {
 // POST /users -- CREATE a new user from the form @ GET /users/new
 router.post("/", async (req, res) => {
   try {
-    // console.log(req.body);
+    // This is to get the offset hours to put into the user table
     const date = new Date();
     const offsetInMinutes = date.getTimezoneOffset();
     const offsetHours = Math.abs(offsetInMinutes) / 60;

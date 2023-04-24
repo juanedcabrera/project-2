@@ -55,6 +55,7 @@ app.use(async (req, res, next) => {
 })
 
 
+
   // routes and controllers
 app.get('/', (req, res) => {
     if (res.locals.user) {

@@ -12,8 +12,54 @@
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,600;0,700;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
     </style>
+   <script>
+    UPLOADCARE_PUBLIC_KEY = "fa1bbb7a33229765419d";
+  
+    function toggleDarkMode() {
+      const body = document.querySelector('body');
+      const isDarkMode = body.classList.toggle('dark-mode');
+      localStorage.setItem('dark-mode', isDarkMode);
+      loadDarkMode();
+    }
+  
+    window.onload = function() {
+      loadDarkMode();
+    };
+    
+  </script>
+  <script>
+    function clearDarkMode() {
+  localStorage.removeItem('dark-mode');
+
+  
+}
+  </script>
+  
     <script>
-      UPLOADCARE_PUBLIC_KEY = "fa1bbb7a33229765419d";
+
+function loadDarkMode() {
+  const isDarkMode = localStorage.getItem('dark-mode') === 'true';
+  
+  const body = document.querySelector('body');
+  body.classList.toggle('dark-mode', isDarkMode);
+
+  const calendarHeaders = document.querySelectorAll('.calendar-header');
+  calendarHeaders.forEach(header => header.classList.toggle('dark-mode', isDarkMode));
+
+  const calendarMonths = document.querySelectorAll('.calendar-month');
+  calendarMonths.forEach(month => month.classList.toggle('dark-mode', isDarkMode));
+
+  const calendarWeekdays = document.querySelectorAll('.calendar-weekdays');
+  calendarWeekdays.forEach(day => day.classList.toggle('dark-mode', isDarkMode));
+
+  const calendarDates = document.querySelectorAll('.calendar-date');
+  calendarDates.forEach(date => date.classList.toggle('dark-mode', isDarkMode));
+
+  const weekends = document.querySelectorAll('.weekend');
+  weekends.forEach(weekend => weekend.classList.toggle('dark-mode', isDarkMode));
+}
+
+
     </script>
     <title>Thoughtful.day</title>
   </head>
@@ -37,6 +83,7 @@
                 <li class="nav-item">
                   <a class="dropdown-item" href="/entries/">All Entries</a>
                 </li>
+               
                 <li class="nav-item">
                   <a class="dropdown-item" href="/entries/new">Add Entry</a>
                 </li>
@@ -45,8 +92,9 @@
                 <img class="rounded-circle shadow-4-strong" alt="avatar2" height="35px" width="35px" src="<%= user.img ? user.img : "/images/default.png" %>" />
               </a>
             </li>
+            <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
             <li class="nav-item">
-              <a class="nav-link" href="/users/logout">Logout</a>
+              <a class="nav-link" href="/users/logout" onclick="clearDarkMode()">Logout</a>
             </li>
             <% } else { %>
             <li class="nav-item">

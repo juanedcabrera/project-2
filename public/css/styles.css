@@ -4,6 +4,7 @@ body {
 
 h1 {
     font-size:40px;
+    margin: 10px;
 }
 
 p {
@@ -262,4 +263,11 @@ h4,h5 {
     color: white;
   }
 
+  .navbar {
+    margin: -8px;
+    height: 60px;
+  }
   
+  .navbar-brand img {
+    height: 45px;
+  }

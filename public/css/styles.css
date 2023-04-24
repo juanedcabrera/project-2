@@ -219,7 +219,7 @@ h4,h5 {
     color: black;
   }
 
-  .dark-mode {
+  .dark-mode{
     background-color: #333333;
     color: #ffffff;
   }
@@ -236,4 +236,30 @@ h4,h5 {
   .dark-mode .calendar-date.highlight {
     background-color: #007bff;
   }
+  
+  .dark-mode .navbar .navbar-brand{
+    background-color: #333;
+    color: white
+  }
+
+  .dark-mode .navbar-nav {
+    background-color: #333333;
+    color: white;
+  }
+
+  .dark-mode .nav-link {
+    background-color: #333333;
+    color: white;
+  }
+
+  .dark-mode .navbar-toggler {
+    background-color: #333333;
+    color: white;
+  }
+
+  .dark-mode .container-fluid {
+    background-color: #333333;
+    color: white;
+  }
+
   

@@ -57,6 +57,7 @@ function loadDarkMode() {
 
   const weekends = document.querySelectorAll('.weekend');
   weekends.forEach(weekend => weekend.classList.toggle('dark-mode', isDarkMode));
+  
 }
 
 
@@ -64,6 +65,7 @@ function loadDarkMode() {
     <title>Thoughtful.day</title>
   </head>
   <body>
+    <div class="navigation">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <% if (user) { %>
@@ -111,6 +113,7 @@ function loadDarkMode() {
         </div>
       </div>
     </nav>
+  </div>
     
     
 

@@ -52,18 +52,23 @@ ___________
 [X] Render add-entry through partials
 [X] all entries need journal type as a searchable field
 [X] user profile - have a timezone added to db and profile
+[X] cap character limits on entries
+[X] add a commitment section to commitment saying "What will you commit?" - placeholder text with example
 
 NICE TO HAVE:
 [] - Profile Page - Settings Page = where users could define some rules on edit, delete, maybe color theme
 [] add a night time entry field asking "Summarize today in one word"
 [] Once you register it should prompt you to create your commitment
-[] After commitment is set, offer journal entry immediately (allow the user to skip)
-[] add a commitment section to commitment saying "What will you commit?" - placeholder text with example
+[] After commitment is set, offer journal entry immediately (allow the user to skip
 [] points for logging in and points for posting
+[] streaks aren't working perfectly. Need to check logic
 
 
 MUST HAVE:
-[] cap character limits on entries
-[] streaks aren't working perfectly. Need to check logic
+[] Dark Mode
+[] Change email address
+[] Delete the account
+
+
 
 

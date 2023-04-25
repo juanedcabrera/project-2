@@ -263,11 +263,6 @@ h4,h5 {
     color: white;
   }
 
-  .navbar {
-    margin: -8px;
-    height: 60px;
-  }
-  
-  .navbar-brand img {
-    height: 45px;
-  }
+.navbar {
+  padding: 0px !important;
+}

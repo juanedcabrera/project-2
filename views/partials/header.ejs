@@ -30,7 +30,6 @@
   <script>
     function clearDarkMode() {
   localStorage.removeItem('dark-mode');
-
   
 }
   </script>
@@ -57,9 +56,7 @@ function loadDarkMode() {
 
   const weekends = document.querySelectorAll('.weekend');
   weekends.forEach(weekend => weekend.classList.toggle('dark-mode', isDarkMode));
-  
 }
-
 
     </script>
     <title>Thoughtful.day</title>
@@ -84,8 +81,7 @@ function loadDarkMode() {
             <% if (typeof user !== 'undefined' && user) { %>
                 <li class="nav-item">
                   <a class="dropdown-item" href="/entries/">All Entries</a>
-                </li>
-               
+                </li>      
                 <li class="nav-item">
                   <a class="dropdown-item" href="/entries/new">Add Entry</a>
                 </li>

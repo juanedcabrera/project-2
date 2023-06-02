@@ -53,6 +53,11 @@ Thoughtful.day will be a journaling platform that utilizes templates to help peo
 ![Wireframes](Wireframes-Journal.drawio.png)
 ![Wireframes](Wireframes-Entry.drawio.png)
 
+## 🖥️ Screenshots
+![Homepage](./public/images/homepage.png)
+
+![Entry](./public/images/entry.png)
+
 ## 🌟 API with Example
 ![ApiExample](APIexample.png)
 

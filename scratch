@@ -54,6 +54,7 @@ ___________
 [X] user profile - have a timezone added to db and profile
 [X] cap character limits on entries
 [X] add a commitment section to commitment saying "What will you commit?" - placeholder text with example
+[X] Dark Mode
 
 NICE TO HAVE:
 [] - Profile Page - Settings Page = where users could define some rules on edit, delete, maybe color theme
@@ -65,7 +66,7 @@ NICE TO HAVE:
 
 
 MUST HAVE:
-[] Dark Mode
+
 [] Change email address
 [] Delete the account
 
